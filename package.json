@@ -26,7 +26,9 @@
   "scripts": {
     "prebuild": "rimraf dist/*",
     "build": "tsc",
-    "docs": "apidoc -i src -o docs"
+    "apidoc": "apidoc -i src -o docs",
+    "prestart": "npm run build && npm run apidoc",
+    "start": "node dist/server.js"
   },
   "apidoc": {
     "title": "judge-blocks API",
