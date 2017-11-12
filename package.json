@@ -1,0 +1,13 @@
+{
+  "name": "judge-api",
+  "version": "0.0.1",
+  "description": "Judge API",
+  "main": "server.js",
+  "repository": "https://bitbucket.org/coding-blocks/judge-api",
+  "author": "Arnav Gupta <arnav@codingblocks.com>",
+  "license": "Apache-2.0",
+  "private": true,
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
