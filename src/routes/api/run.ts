@@ -15,6 +15,7 @@ const route: Router = Router()
  *
  * @apiUse AvailableLangs
  *
+ * @apiSuccess {Number} id Submission id
  * @apiSuccess {String(Base64)} stdout Output of stdout of execution (encoded in base64)
  * @apiSuccess {String(Base64)} stderr Output of stderr of execution (encoded in base64)
  * @apiSuccess {Number} statuscode Result of operation
@@ -22,7 +23,7 @@ const route: Router = Router()
  * @apiSuccessExample {JSON} Success-Response:
  *  HTTP/1.1 200 OK
  *  {
- *    "judgement_id": 10,
+ *    "id": 10,
  *    "statuscode": 0,
  *    "stdout": "NA0KMg0KMw=="
  *    "stderr": "VHlwZUVycm9y"

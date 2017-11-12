@@ -1,6 +1,7 @@
 import {Router} from 'express'
 import {route as run} from './run'
-import {route as submission} from './submission'
+import {route as submissions} from './submissions'
+import {route as langs} from './langs'
 
 /**
  * @apiDefine AvailableLangs
@@ -9,7 +10,8 @@ import {route as submission} from './submission'
  */
 
 const route: Router = Router()
-route.use('run', run)
-route.use('submission', submission)
+route.use('/run', run)
+route.use('/submissions', submissions)
+route.use('/langs', langs)
 
 export default route

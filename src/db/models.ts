@@ -4,33 +4,64 @@ import dbg = require('debug')
 
 const debug = dbg('judge:db')
 
-const DataTypes = (<any>Sequelize).DataTypes
-
 const db = new Sequelize(config.DB.DATABASE, config.DB.USERNAME, config.DB.PASSWORD, {
-  logging: debug
+  dialect: 'postgres',
+  logging: debug,
+  pool: {
+    max: 10,
+    min: 1,
+    idle: 10000
+  }
 })
 
 const Langs = db.define('langs', {
   lang_slug: {
-    type: DataTypes.String(10),
+    type: Sequelize.STRING(10),
     primaryKey: true
   },
-  lang_name: DataTypes.STRING,
-  lang_version: DataTypes.STRING
+  lang_name: Sequelize.STRING(10),
+  lang_version: Sequelize.STRING(5)
 })
 
 const Submissions = db.define('submissions', {
-  start_time: DataTypes.DATE,
-  end_time: DataTypes.DATE,
-  results: DataTypes.ARRAY(DataTypes.NUMBER)
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  lang: {
+    type: Sequelize.STRING(10),
+    references: {
+      model: Langs,
+      key: 'lang_slug'
+    }
+  },
+  start_time: Sequelize.DATE,
+  end_time: Sequelize.DATE,
+  results: Sequelize.ARRAY(Sequelize.INTEGER)
 })
+export type SubmissionAttributes = {
+  id?: number
+  lang: string
+  start_time: Date
+  end_time?: Date
+  results?: Array<number>
+}
 
 const ApiKeys = db.define('apikeys', {
-  key: DataTypes
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  key: Sequelize.STRING(64)
 })
 
 Submissions.belongsTo(ApiKeys)
-Submissions.belongsTo(Langs)
+
+db.sync({force: true})
+  .then(() => debug('Database Synced'))
+  .catch((err) => console.error('Error creating database'))
 
 export {
   Langs, Submissions, ApiKeys

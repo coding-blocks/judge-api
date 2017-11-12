@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const models_1 = require("../../db/models");
 const route = express_1.Router();
 exports.route = route;
 /**
@@ -13,5 +14,9 @@ exports.route = route;
  *
  */
 route.get('/', (req, res, next) => {
+    models_1.Langs.findAll()
+        .then((langs) => {
+        res.status(200).json(langs);
+    });
 });
 //# sourceMappingURL=langs.js.map

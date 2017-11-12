@@ -4,9 +4,9 @@
     "target": "es2015",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "declaration": true,
     "sourceMap": true,
     "sourceRoot": ".",
+    "baseUrl": "src",
     "outDir": "dist"
   },
   "include": [
