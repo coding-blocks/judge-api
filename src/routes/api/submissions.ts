@@ -4,7 +4,7 @@ import {JudgeJob, queueJob, SubmissionJob} from '../../rabbitmq/jobqueue'
 
 const route: Router = Router()
 
-export interface SubmissionReqest extends Request {
+export interface SubmissionRequest extends Request {
   body: {
     source: string,
     lang: string,
@@ -83,7 +83,7 @@ route.get('/', (req, res, next) => {
  *   ]
  * }
  */
-route.post('/', (req: SubmissionReqest, res, next) => {
+route.post('/', (req: SubmissionRequest, res, next) => {
   // TODO: Validate parameters of submission request (like source should be url)
   Submissions.create(<SubmissionAttributes>{
     lang: req.body.lang,
