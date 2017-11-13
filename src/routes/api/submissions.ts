@@ -1,5 +1,6 @@
 import {Request, Router} from 'express'
 import {SubmissionAttributes, Submissions} from '../../db/models'
+import {JudgeJob, queueJob, SubmissionJob} from '../../rabbitmq/jobqueue'
 
 const route: Router = Router()
 
@@ -88,9 +89,17 @@ route.post('/', (req: SubmissionReqest, res, next) => {
     lang: req.body.lang,
     start_time: new Date()
   }).then((submission: SubmissionAttributes) => {
+
+    let queued = queueJob(<SubmissionJob>{
+      id: submission.id,
+      source: req.body.source,
+      testcases: req.body.testcases,
+      getstdout: req.body.getstdout
+    })
+
     res.status(202).json(<SubmissionResponse>{
       id: submission.id,
-      accepted: true,
+      accepted: queued,
       callbackurl: req.body.callbackurl
     })
   }).catch(err => {

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const models_1 = require("../../db/models");
+const jobqueue_1 = require("../../rabbitmq/jobqueue");
 const route = express_1.Router();
 exports.route = route;
 /**
@@ -72,9 +73,15 @@ route.post('/', (req, res, next) => {
         lang: req.body.lang,
         start_time: new Date()
     }).then((submission) => {
+        let queued = jobqueue_1.queueJob({
+            id: submission.id,
+            source: req.body.source,
+            testcases: req.body.testcases,
+            getstdout: req.body.getstdout
+        });
         res.status(202).json({
             id: submission.id,
-            accepted: true,
+            accepted: queued,
             callbackurl: req.body.callbackurl
         });
     }).catch(err => {
