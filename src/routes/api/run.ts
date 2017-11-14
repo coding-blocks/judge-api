@@ -1,6 +1,6 @@
 import {Response, Router} from 'express'
 import {SubmissionAttributes, Submissions} from '../../db/models'
-import {RunJob, queueJob} from '../../rabbitmq/jobqueue'
+import {RunJob, queueJob, successListener} from '../../rabbitmq/jobqueue'
 
 const route: Router = Router()
 
@@ -71,6 +71,16 @@ route.post('/', (req, res, next) => {
       error: err
     })
   })
+})
+
+/**
+ * Hear on the success queue, and send back the run response
+ */
+successListener.on('success', (result: RunResponse) => {
+  if (runPool[result.id]) {
+    runPool[result.id].status(200).json(result)
+    delete runPool[result.id]
+  }
 })
 
 export {route}

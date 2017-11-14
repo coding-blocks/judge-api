@@ -55,4 +55,13 @@ route.post('/', (req, res, next) => {
         });
     });
 });
+/**
+ * Hear on the success queue, and send back the run response
+ */
+jobqueue_1.successListener.on('success', (result) => {
+    if (runPool[result.id]) {
+        runPool[result.id].status(200).json(result);
+        delete runPool[result.id];
+    }
+});
 //# sourceMappingURL=run.js.map
