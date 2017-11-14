@@ -39,7 +39,7 @@
     "apidoc": "apidoc -i src -o docs",
     "prestart": "npm run build && npm run apidoc",
     "start": "node dist/run.js",
-    "test": "mocha --require ts-node/register test/**/*"
+    "test": "mocha --exit --require ts-node/register test/**/*"
   },
   "apidoc": {
     "title": "judge-blocks API",

@@ -1,16 +1,17 @@
 import * as request from 'request'
 import {expect} from 'chai'
 import app, {config} from '../src/server'
-import {Http2Server} from 'http2'
+import * as http from 'http'
+import {Server} from 'http'
 
-let server: Http2Server
+let server: Server
 
 
 
 describe('/api/langs', () => {
   before((done) => {
-    server = app.listen(config.PORT, done)
-  })
+    server = http.createServer(app)
+    server.listen(config.PORT, done)  })
 
   it('GET', (done) => {
     request.get(`http://localhost:${config.PORT}/api/langs`, (err, resp, bodyStr) => {

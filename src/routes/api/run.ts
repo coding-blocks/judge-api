@@ -81,6 +81,13 @@ successListener.on('success', (result: RunResponse) => {
     runPool[result.id].status(200).json(result)
     delete runPool[result.id]
   }
+  Submissions.update({
+    end_time: new Date()
+  }, {
+    where: {
+      id: result.id
+    }
+  })
 })
 
 export {route}

@@ -63,5 +63,12 @@ jobqueue_1.successListener.on('success', (result) => {
         runPool[result.id].status(200).json(result);
         delete runPool[result.id];
     }
+    models_1.Submissions.update({
+        end_time: new Date()
+    }, {
+        where: {
+            id: result.id
+        }
+    });
 });
 //# sourceMappingURL=run.js.map

@@ -1,10 +1,11 @@
 import * as request from 'request'
 import {expect} from 'chai'
 import app, {config} from '../src/server'
-import {Http2Server} from 'http2'
 import {RunRequestBody, RunResponse} from '../src/routes/api/run'
 import * as amqp from 'amqplib/callback_api'
 import {Channel, Connection} from 'amqplib/callback_api'
+import * as http from 'http'
+import {Server} from 'http'
 
 let jobQ = 'job_queue'
 let successQ = 'success_queue'
@@ -30,15 +31,16 @@ amqp.connect('amqp://localhost', (err, connection) => {
   })
 })
 
-let server: Http2Server
+let server: Server
 
 describe('/api/runs', () => {
   before((done) => {
-    server = app.listen(config.PORT, done)
+    server = http.createServer(app)
+    server.listen(config.PORT, done)
   })
 
 
-  it('POST', (done) => {
+  it('POST works with correct submission', (done) => {
     let source = `
     #include <iostream>
     using namespace std;
@@ -55,7 +57,7 @@ describe('/api/runs', () => {
       {
         json: <RunRequestBody> {
           source: (new Buffer(source).toString('base64')),
-          lang: "cpp",
+          lang: 'cpp',
           stdin: (new Buffer(stdin).toString('base64'))
         }
       },
