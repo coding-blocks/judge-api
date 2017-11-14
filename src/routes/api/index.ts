@@ -10,7 +10,7 @@ import {route as langs} from './langs'
  */
 
 const route: Router = Router()
-route.use('/run', run)
+route.use('/runs', run)
 route.use('/submissions', submissions)
 route.use('/langs', langs)
 

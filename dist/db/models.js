@@ -50,7 +50,7 @@ const ApiKeys = db.define('apikeys', {
 });
 exports.ApiKeys = ApiKeys;
 Submissions.belongsTo(ApiKeys);
-db.sync({ force: true })
+db.sync({})
     .then(() => debug('Database Synced'))
     .catch((err) => console.error('Error creating database'));
 //# sourceMappingURL=models.js.map

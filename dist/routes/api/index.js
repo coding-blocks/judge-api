@@ -10,7 +10,7 @@ const langs_1 = require("./langs");
  * py2,java7,java8,cpp,cpp14,nodejs6,nodejs8,csharp
  */
 const route = express_1.Router();
-route.use('/run', run_1.route);
+route.use('/runs', run_1.route);
 route.use('/submissions', submissions_1.route);
 route.use('/langs', langs_1.route);
 exports.default = route;

@@ -1,8 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const models_1 = require("../../db/models");
+const jobqueue_1 = require("../../rabbitmq/jobqueue");
 const route = express_1.Router();
 exports.route = route;
+const runPool = {};
 /**
  * @api {post} /run POST /run
  * @apiDescription Run a code and get its output
@@ -31,5 +34,25 @@ exports.route = route;
  *  }
  */
 route.post('/', (req, res, next) => {
+    // TODO: Validate parameters of submission request (like source should be url)
+    models_1.Submissions.create({
+        lang: req.body.lang,
+        start_time: new Date()
+    }).then((submission) => {
+        let queued = jobqueue_1.queueJob({
+            id: submission.id,
+            source: req.body.source,
+            lang: req.body.lang,
+            stdin: req.body.stdin
+        });
+        // Put into pool and wait for judge-worker to respond
+        runPool[submission.id] = res;
+    }).catch(err => {
+        res.status(501).json({
+            code: 501,
+            message: "Could not accept submission",
+            error: err
+        });
+    });
 });
 //# sourceMappingURL=run.js.map

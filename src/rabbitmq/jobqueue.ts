@@ -12,6 +12,7 @@ export interface SubmissionJob {
 export interface RunJob {
   id: number
   source: string,
+  lang: string,
   stdin: string
 }
 
@@ -37,10 +38,10 @@ amqp.connect('amqp://localhost', (err, connection) => {
 
 /**
  * Put a new job on the queue
- * @param {SubmissionJob} job
+ * @param {JudgeJob} job
  * @returns {boolean} true if job was put on queue successfully
  */
-function queueJob(job: any) {
+function queueJob(job: JudgeJob) {
   return jobChannel.sendToQueue(jobQ, new Buffer(JSON.stringify(job)), {persistent: true})
 }
 

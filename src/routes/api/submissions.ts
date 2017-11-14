@@ -1,17 +1,18 @@
 import {Request, Router} from 'express'
 import {SubmissionAttributes, Submissions} from '../../db/models'
-import {JudgeJob, queueJob, SubmissionJob} from '../../rabbitmq/jobqueue'
+import {queueJob, SubmissionJob} from '../../rabbitmq/jobqueue'
 
 const route: Router = Router()
 
+export type SubmissionRequestBody = {
+  source: string,
+  lang: string,
+  testcases: [{input: string, output:string}]
+  getstdout: boolean,
+  callbackurl: string
+}
 export interface SubmissionRequest extends Request {
-  body: {
-    source: string,
-    lang: string,
-    testcases: [{input: string, output:string}]
-    getstdout: boolean,
-    callbackurl: string
-  }
+  body: SubmissionRequestBody
 }
 
 export interface SubmissionResponse {

@@ -4,13 +4,14 @@ import config = require('../config')
 import * as path from 'path'
 import apiRoute from './routes/api'
 
-const debug = dbg('server')
+const debug = dbg('server:main')
 
 const app = express()
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 app.use('/docs', express.static(path.join(__dirname, '../docs')))
 
 app.use('/api', apiRoute)
 
-app.listen(config.PORT, () => {
-  debug(`Server started on http://localhost:${config.PORT}`)
-})
+export default app
+export {config}

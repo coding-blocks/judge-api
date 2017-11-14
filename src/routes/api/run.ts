@@ -1,6 +1,25 @@
-import {Router} from 'express'
+import {Response, Router} from 'express'
+import {SubmissionAttributes, Submissions} from '../../db/models'
+import {RunJob, queueJob} from '../../rabbitmq/jobqueue'
 
 const route: Router = Router()
+
+export type RunRequestBody = {
+  source: string, //Base64 encoded
+  lang: string,
+  stdin: string
+}
+export interface RunRequest extends Request {
+  body: RunRequestBody
+}
+
+export interface RunResponse {
+  id: number,
+  stdout: string,
+  stderr: string
+}
+
+const runPool: {[x: number]: Response} = {}
 
 /**
  * @api {post} /run POST /run
@@ -30,7 +49,28 @@ const route: Router = Router()
  *  }
  */
 route.post('/', (req, res, next) => {
+  // TODO: Validate parameters of submission request (like source should be url)
+  Submissions.create(<SubmissionAttributes>{
+    lang: req.body.lang,
+    start_time: new Date()
+  }).then((submission: SubmissionAttributes) => {
 
+    let queued = queueJob(<RunJob>{
+      id: submission.id,
+      source: req.body.source,
+      lang: req.body.lang,
+      stdin: req.body.stdin
+    })
+    // Put into pool and wait for judge-worker to respond
+    runPool[submission.id] = res
+
+  }).catch(err => {
+    res.status(501).json({
+      code: 501,
+      message: "Could not accept submission",
+      error: err
+    })
+  })
 })
 
 export {route}

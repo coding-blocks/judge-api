@@ -19,7 +19,7 @@ amqp.connect('amqp://localhost', (err, connection) => {
 });
 /**
  * Put a new job on the queue
- * @param {SubmissionJob} job
+ * @param {JudgeJob} job
  * @returns {boolean} true if job was put on queue successfully
  */
 function queueJob(job) {

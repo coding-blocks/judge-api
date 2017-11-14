@@ -10,10 +10,12 @@
     "outDir": "dist"
   },
   "include": [
-    "src"
+    "src",
+    "tests"
   ],
   "exclude": [
     "dist",
-    "node_modules"
+    "node_modules",
+    "tests"
   ]
 }

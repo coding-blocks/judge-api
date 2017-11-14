@@ -19,10 +19,18 @@
     "sequelize": "^4.22.6"
   },
   "devDependencies": {
+    "@types/chai": "^4.0.4",
     "@types/debug": "^0.0.30",
     "@types/express": "^4.0.39",
+    "@types/mocha": "^2.2.44",
+    "@types/request": "^2.0.8",
     "@types/sequelize": "^4.0.79",
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "nyc": "^11.3.0",
+    "request": "^2.83.0",
     "rimraf": "^2.6.2",
+    "ts-node": "^3.3.0",
     "typescript": "^2.6.1"
   },
   "scripts": {
@@ -30,7 +38,8 @@
     "build": "tsc",
     "apidoc": "apidoc -i src -o docs",
     "prestart": "npm run build && npm run apidoc",
-    "start": "node dist/server.js"
+    "start": "node dist/run.js",
+    "test": "mocha --require ts-node/register test/**/*"
   },
   "apidoc": {
     "title": "judge-blocks API",
