@@ -22,6 +22,7 @@ amqp.connect('amqp://localhost', (err, connection) => {
         jobChannel = channel;
         jobChannel.consume(successQ, (msg) => {
             successListener.emit('success', JSON.parse(msg.content.toString()));
+            jobChannel.ack(msg);
         });
     });
 });
