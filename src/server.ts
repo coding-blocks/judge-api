@@ -1,7 +1,7 @@
 import express = require('express')
 import dbg = require('debug')
 import config = require('../config')
-import * as path from 'path'
+import path = require ('path')
 import apiRoute from './routes/api'
 
 const debug = dbg('server:main')

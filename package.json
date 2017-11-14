@@ -39,12 +39,21 @@
     "apidoc": "apidoc -i src -o docs",
     "prestart": "npm run build && npm run apidoc",
     "start": "node dist/run.js",
-    "test": "mocha --exit --require ts-node/register test/**/*"
+    "test": "mocha --exit --require ts-node/register test/**/*.ts",
+    "cover": "nyc npm test"
   },
   "apidoc": {
     "title": "judge-blocks API",
     "url": "http://judge.cb.lk",
     "sampleUrl": "http://judge.cb.lk"
+  },
+  "nyc": {
+    "extension": [".ts", ".js"],
+    "reporter": [
+      "html",
+      "lcov"
+    ],
+    "sourceMap": true
   },
   "engines": {
     "node": "8",
