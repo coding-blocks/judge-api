@@ -6,6 +6,7 @@ const debug = dbg('judge:db')
 
 const db = new Sequelize(config.DB.DATABASE, config.DB.USERNAME, config.DB.PASSWORD, {
   dialect: 'postgres',
+  host: config.DB.HOST,
   logging: debug,
   pool: {
     max: 10,
@@ -61,7 +62,7 @@ Submissions.belongsTo(ApiKeys)
 
 db.sync({})
   .then(() => debug('Database Synced'))
-  .catch((err) => console.error('Error creating database'))
+  .catch((err) => console.error(err))
 
 export {
   Langs, Submissions, ApiKeys

@@ -1,6 +1,7 @@
 import {Response, Router} from 'express'
 import {SubmissionAttributes, Submissions} from '../../db/models'
 import {RunJob, queueJob, successListener} from '../../rabbitmq/jobqueue'
+import {config} from '../../server'
 
 const route: Router = Router()
 
@@ -63,6 +64,14 @@ route.post('/', (req, res, next) => {
     })
     // Put into pool and wait for judge-worker to respond
     runPool[submission.id] = res
+    setTimeout(() => {
+      if (runPool[submission.id]) {
+        runPool[submission.id].status(567).json({
+          code: 567,
+          message: "Compile/Run timed out",
+        })
+      }
+    }, config.RUN.TIMEOUT)
 
   }).catch(err => {
     res.status(501).json({

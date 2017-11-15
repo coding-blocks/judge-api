@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const amqp = require("amqplib/callback_api");
 const events_1 = require("events");
+const server_1 = require("../server");
 let jobQ = 'job_queue';
 let successQ = 'success_queue';
 let jobChannel;
@@ -11,7 +12,7 @@ exports.successListener = successListener;
  * Connect to RabbitMQ and save channel to
  * @link {jobChannel}
  */
-amqp.connect('amqp://localhost', (err, connection) => {
+amqp.connect(`amqp://${server_1.config.RABBITMQ.HOST}`, (err, connection) => {
     if (err)
         throw err;
     connection.createChannel((err, channel) => {

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const models_1 = require("../../db/models");
 const jobqueue_1 = require("../../rabbitmq/jobqueue");
+const server_1 = require("../../server");
 const route = express_1.Router();
 exports.route = route;
 const runPool = {};
@@ -47,6 +48,14 @@ route.post('/', (req, res, next) => {
         });
         // Put into pool and wait for judge-worker to respond
         runPool[submission.id] = res;
+        setTimeout(() => {
+            if (runPool[submission.id]) {
+                runPool[submission.id].status(567).json({
+                    code: 567,
+                    message: "Compile/Run timed out",
+                });
+            }
+        }, server_1.config.RUN.TIMEOUT);
     }).catch(err => {
         res.status(501).json({
             code: 501,

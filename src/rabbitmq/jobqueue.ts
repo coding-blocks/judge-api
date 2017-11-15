@@ -2,6 +2,7 @@ import * as amqp from 'amqplib/callback_api'
 import {Channel, Connection} from 'amqplib/callback_api'
 import {EventEmitter} from 'events'
 import {RunResponse} from '../routes/api/run'
+import {config} from '../server'
 
 
 export interface SubmissionJob {
@@ -30,7 +31,7 @@ let successListener = new EventEmitter()
  * Connect to RabbitMQ and save channel to
  * @link {jobChannel}
  */
-amqp.connect('amqp://localhost', (err, connection) => {
+amqp.connect(`amqp://${config.RABBITMQ.HOST}`, (err, connection) => {
   if (err) throw err
 
   connection.createChannel((err, channel) =>{
