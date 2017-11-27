@@ -38,7 +38,7 @@
     "build": "tsc",
     "apidoc": "apidoc -i src -o docs",
     "prestart": "npm run build && npm run apidoc",
-    "start": "node dist/run.js",
+    "start": "./wait-for-it.sh ${AMQP_HOST}:${AMQP_PORT} -- node dist/run.js",
     "test": "mocha --exit --require ts-node/register test/**/*.ts",
     "cover": "nyc npm test"
   },
