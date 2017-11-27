@@ -1,16 +1,18 @@
-const secrets = require('./secrets.json')
 exports = module.exports = {
   RUN: {
     TIMEOUT: 10000,
   },
   PORT: process.env.PORT || 3737,
   DB: {
-    DATABASE: secrets.DB_DATABASE,
-    USERNAME: secrets.DB_USERNAME,
-    PASSWORD: secrets.DB_PASSWORD,
-    HOST: process.env.DB_HOST || secrets.DB_HOST
+    DATABASE: process.env.DB_NAME || 'judgeapi',
+    USERNAME: process.env.DB_USER|| 'judgeapi',
+    PASSWORD: process.env.DB_PASS|| 'judgeapi',
+    HOST: process.env.DB_HOST || 'localhost'
   },
-  RABBITMQ: {
-    HOST: process.env.RABBITMQ_HOST || 'localhost'
+  AMQP: {
+    USER: process.env.AMQP_USER || 'codingblocks',
+    PASS: process.env.AMQP_PASS || 'codingblocks',
+    HOST: process.env.AMQP_HOST || 'localhost',
+    PORT: process.env.AMQP_PORT || 5672
   }
 }

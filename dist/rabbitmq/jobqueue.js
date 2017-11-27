@@ -12,7 +12,7 @@ exports.successListener = successListener;
  * Connect to RabbitMQ and save channel to
  * @link {jobChannel}
  */
-amqp.connect(`amqp://${server_1.config.RABBITMQ.HOST}`, (err, connection) => {
+amqp.connect(`amqp://${server_1.config.AMQP.USER}:${server_1.config.AMQP.PASS}@${server_1.config.AMQP.HOST}:${server_1.config.AMQP.PORT}`, (err, connection) => {
     if (err)
         throw err;
     connection.createChannel((err, channel) => {

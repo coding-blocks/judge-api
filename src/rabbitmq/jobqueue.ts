@@ -31,21 +31,22 @@ let successListener = new EventEmitter()
  * Connect to RabbitMQ and save channel to
  * @link {jobChannel}
  */
-amqp.connect(`amqp://${config.RABBITMQ.HOST}`, (err, connection) => {
-  if (err) throw err
-
-  connection.createChannel((err, channel) =>{
+amqp.connect(`amqp://${config.AMQP.USER}:${config.AMQP.PASS}@${config.AMQP.HOST}:${config.AMQP.PORT}`,
+  (err, connection) => {
     if (err) throw err
 
-    channel.assertQueue(jobQ, {durable: true})
-    channel.assertQueue(successQ, {durable: true})
-    jobChannel = channel
-    jobChannel.consume(successQ, (msg) => {
-      successListener.emit('success', JSON.parse(msg.content.toString()))
-      jobChannel.ack(msg)
+    connection.createChannel((err, channel) =>{
+      if (err) throw err
+
+      channel.assertQueue(jobQ, {durable: true})
+      channel.assertQueue(successQ, {durable: true})
+      jobChannel = channel
+      jobChannel.consume(successQ, (msg) => {
+        successListener.emit('success', JSON.parse(msg.content.toString()))
+        jobChannel.ack(msg)
+      })
     })
   })
-})
 
 /**
  * Put a new job on the queue
