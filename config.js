@@ -1,6 +1,6 @@
 exports = module.exports = {
   RUN: {
-    TIMEOUT: 10000,
+    TIMEOUT: process.env.RUN_TIMOUT || 10000,
   },
   PORT: process.env.PORT || 3737,
   DB: {

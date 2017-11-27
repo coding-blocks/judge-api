@@ -54,6 +54,7 @@ route.post('/', (req, res, next) => {
                     code: 567,
                     message: "Compile/Run timed out",
                 });
+                delete runPool[submission.id];
             }
         }, server_1.config.RUN.TIMEOUT);
     }).catch(err => {
