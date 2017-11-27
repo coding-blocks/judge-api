@@ -23,6 +23,7 @@ amqp.connect(`amqp://${server_1.config.AMQP.USER}:${server_1.config.AMQP.PASS}@$
         channel.assertQueue(successQ, { durable: true });
         jobChannel = channel;
         jobChannel.consume(successQ, (msg) => {
+            debug(`SUCCESS:CONSUME: msg.content = ${msg.content.toString()}`);
             successListener.emit('success', JSON.parse(msg.content.toString()));
             jobChannel.ack(msg);
         });

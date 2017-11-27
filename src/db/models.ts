@@ -10,7 +10,6 @@ const db = new Sequelize(config.DB.DATABASE, config.DB.USERNAME, config.DB.PASSW
   logging: debug,
   pool: {
     max: 10,
-    min: 1,
     idle: 10000
   }
 })
