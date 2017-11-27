@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const amqp = require("amqplib/callback_api");
 const events_1 = require("events");
 const server_1 = require("../server");
+const debug = require('debug')('judge:api:jobqueue');
 let jobQ = 'job_queue';
 let successQ = 'success_queue';
 let jobChannel;
