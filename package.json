@@ -1,6 +1,6 @@
 {
   "name": "judge-api",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Judge API",
   "main": "dist/server.js",
   "repository": "https://bitbucket.org/coding-blocks/judge-api",
@@ -48,7 +48,10 @@
     "sampleUrl": "http://judge.cb.lk"
   },
   "nyc": {
-    "extension": [".ts", ".js"],
+    "extension": [
+      ".ts",
+      ".js"
+    ],
     "reporter": [
       "html",
       "lcov"
