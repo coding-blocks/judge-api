@@ -58,8 +58,8 @@
       ".js"
     ],
     "reporter": [
-      "html",
-      "lcov"
+      "text",
+      "lcovonly"
     ],
     "sourceMap": true
   },
