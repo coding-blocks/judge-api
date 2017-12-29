@@ -33,4 +33,8 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            docker exec -t --env "JUDGEAPI_HOST=api JUDGEAPI_PORT=2222" judgecompose_api_1  pkill node && DEBUG=test:* npm run test
+            docker kill judgecompose_api_1
+            docker run -t --env-file .env \
+                    --network judgecompose_default \
+                    --env "DEBUG=test:* JUDGEAPI_HOST=api JUDGEAPI_PORT=2222" codingblocks/judge-api \
+                    npm run test
