@@ -11,7 +11,7 @@ docker kill judgecompose_api_1
 docker run -t --env-file .env \
         --network judgecompose_default \
         --env "DEBUG=test:* JUDGEAPI_HOST=api JUDGEAPI_PORT=2222" codingblocks/judge-api \
-        npm run test
+        npm run cover
 
 docker-compose kill
 docker-compose down
