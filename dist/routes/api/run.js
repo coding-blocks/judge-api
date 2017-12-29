@@ -40,8 +40,8 @@ route.post('/', (req, res, next) => {
     if (invalidRequest) {
         return res.status(501).json({
             code: 501,
-            message: 'Invalid run request',
-            err: invalidRequest
+            message: invalidRequest.message,
+            err: invalidRequest.stack
         });
     }
     models_1.Submissions.create({

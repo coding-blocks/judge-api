@@ -55,8 +55,8 @@ route.post('/', (req, res, next) => {
   if (invalidRequest) {
     return res.status(501).json({
       code: 501,
-      message: 'Invalid run request',
-      err: invalidRequest
+      message: (<Error>invalidRequest).message,
+      err: (<Error>invalidRequest).stack
     })
   }
   Submissions.create(<SubmissionAttributes>{

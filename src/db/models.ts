@@ -66,10 +66,6 @@ const ApiKeys = db.define('apikeys', {
 
 Submissions.belongsTo(ApiKeys)
 
-db.sync({})
-  .then(() => debug('Database Synced'))
-  .catch((err) => console.error(err))
-
 export {
   Langs, Submissions, ApiKeys, db
 }

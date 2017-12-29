@@ -1,6 +1,15 @@
 import app, {config} from './server'
 import * as debug from 'debug'
+import {db} from './db/models'
 
-app.listen(config.PORT, () => {
-  debug('server:run')(`Server started on http://localhost:${config.PORT}`)
-})
+const log = debug('judge:api')
+
+db.sync({})
+  .then(() => {
+    log('Database Synced')
+    app.listen(config.PORT, () => {
+      log(`Server started on http://localhost:${config.PORT}`)
+    })
+  })
+  .catch((err) => console.error(err))
+
