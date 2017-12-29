@@ -1,6 +1,6 @@
 {
   "name": "judge-api",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Judge API",
   "main": "dist/server.js",
   "repository": "https://bitbucket.org/coding-blocks/judge-api",
@@ -40,12 +40,13 @@
     "prestart": "npm run build && npm run apidoc",
     "start": "./wait-for-it.sh ${AMQP_HOST}:${AMQP_PORT} -- node dist/run.js",
     "test": "mocha --exit --require ts-node/register test/**/*.ts",
-    "cover": "nyc npm test"
+    "cover": "nyc npm test",
+    "seedlangs": "node dist/db/scripts/seed-defaultlangs.js"
   },
   "apidoc": {
     "title": "judge-blocks API",
-    "url": "http://judge.cb.lk",
-    "sampleUrl": "http://judge.cb.lk"
+    "url": "http://judge.cb.lk/api",
+    "sampleUrl": "http://judge.cb.lk/api"
   },
   "nyc": {
     "extension": [

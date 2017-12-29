@@ -1,6 +1,7 @@
 import * as Sequelize from 'sequelize'
 import config = require('../../config')
 import dbg = require('debug')
+import {DefineAttributes} from 'sequelize'
 
 const debug = dbg('judge:db')
 
@@ -13,6 +14,7 @@ const db = new Sequelize(config.DB.DATABASE, config.DB.USERNAME, config.DB.PASSW
     idle: 10000
   }
 })
+export interface LangsRow { lang_slug: string, lang_name:string, lang_version: string }
 
 const Langs = db.define('langs', {
   lang_slug: {

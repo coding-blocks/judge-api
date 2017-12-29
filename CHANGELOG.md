@@ -4,6 +4,9 @@
 
 ### 0.1.0
 
+#### 0.0.4
+ - default langs seeding script
+
 #### 0.0.3
  - wait-for-it AMQP_HOST:AMQP_PORT
  - keep min connection pool size to 0
