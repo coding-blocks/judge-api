@@ -4,6 +4,7 @@ const express_1 = require("express");
 const models_1 = require("../../db/models");
 const jobqueue_1 = require("../../rabbitmq/jobqueue");
 const server_1 = require("../../server");
+const SubmissionValidators_1 = require("../../validators/SubmissionValidators");
 const route = express_1.Router();
 exports.route = route;
 const runPool = {};
@@ -35,7 +36,14 @@ const runPool = {};
  *  }
  */
 route.post('/', (req, res, next) => {
-    // TODO: Validate parameters of submission request (like source should be url)
+    const invalidRequest = SubmissionValidators_1.isInvalidRunRequest(req);
+    if (invalidRequest) {
+        return res.status(501).json({
+            code: 501,
+            message: 'Invalid run request',
+            err: invalidRequest
+        });
+    }
     models_1.Submissions.create({
         lang: req.body.lang,
         start_time: new Date()

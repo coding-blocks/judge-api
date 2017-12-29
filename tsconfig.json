@@ -10,8 +10,7 @@
     "outDir": "dist"
   },
   "include": [
-    "src",
-    "tests"
+    "src"
   ],
   "exclude": [
     "dist",

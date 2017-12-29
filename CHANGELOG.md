@@ -4,6 +4,9 @@
 
 ### 0.1.0
 
+#### 0.0.6
+ - validate run request body
+
 #### 0.0.5
  - default langs seeding script
  - paranoid delete submissions

@@ -2,6 +2,7 @@ import {Response, Router} from 'express'
 import {SubmissionAttributes, Submissions} from '../../db/models'
 import {RunJob, queueJob, successListener} from '../../rabbitmq/jobqueue'
 import {config} from '../../server'
+import {isInvalidRunRequest} from '../../validators/SubmissionValidators'
 
 const route: Router = Router()
 
@@ -50,7 +51,14 @@ const runPool: {[x: number]: Response} = {}
  *  }
  */
 route.post('/', (req, res, next) => {
-  // TODO: Validate parameters of submission request (like source should be url)
+  const invalidRequest = isInvalidRunRequest(req)
+  if (invalidRequest) {
+    return res.status(501).json({
+      code: 501,
+      message: 'Invalid run request',
+      err: invalidRequest
+    })
+  }
   Submissions.create(<SubmissionAttributes>{
     lang: req.body.lang,
     start_time: new Date()
