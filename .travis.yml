@@ -26,8 +26,13 @@ before_script:
 
 script:
   - docker kill judgecompose_api_1
+  - mkdir -p coverage
   - |
     docker run -t --env-file .env \
+    -v "$PWD/shared:/shared" \
     --network judgecompose_default \
     --env "DEBUG=test:* JUDGEAPI_HOST=api JUDGEAPI_PORT=2222" codingblocks/judge-api \
-    npm run codecov
+    npm run cover && mv coverage/* /coverage/
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
