@@ -10,26 +10,27 @@ import {Server} from 'http'
 let jobQ = 'job_queue'
 let successQ = 'success_queue'
 
-amqp.connect('amqp://localhost', (err, connection) => {
-  if (err) throw err
-
-  connection.createChannel((err2, channel) => {
-
-    channel.assertQueue(successQ);
-    channel.assertQueue(jobQ);
-    channel.consume(jobQ, (msg) => {
-      let job = JSON.parse(msg.content.toString())
-      channel.sendToQueue(successQ, (new Buffer(JSON.stringify(<RunResponse>{
-        id: job.id,
-        stderr: 'stderr',
-        stdout: 'stdout'
-      }))))
-      channel.ack(msg)
-    })
-
-
-  })
-})
+// amqp.connect(`amqp://${config.AMQP.USER}:${config.AMQP.PASS}@${config.AMQP.HOST}:${config.AMQP.PORT}`,
+//   (err, connection) => {
+//     if (err) throw err
+//
+//     connection.createChannel((err2, channel) => {
+//
+//       channel.assertQueue(successQ)
+//       channel.assertQueue(jobQ)
+//       channel.consume(jobQ, (msg) => {
+//         let job = JSON.parse(msg.content.toString())
+//         channel.sendToQueue(successQ, (new Buffer(JSON.stringify(<RunResponse>{
+//           id: job.id,
+//           stderr: 'stderr',
+//           stdout: 'stdout'
+//         }))))
+//         channel.ack(msg)
+//       })
+//
+//
+//     })
+//   })
 
 let server: Server
 
@@ -51,9 +52,9 @@ describe('/api/runs', () => {
         return 0;
     }
     `
-    let stdin = `World`;
+    let stdin = `World`
 
-    request.post(`http://localhost:${config.PORT}/api/runs`,
+    request.post(`http://${config.HOST}:${config.PORT}/api/runs`,
       {
         json: <RunRequestBody> {
           source: (new Buffer(source).toString('base64')),
@@ -62,9 +63,9 @@ describe('/api/runs', () => {
         }
       },
       (err, resp, body) => {
-      expect(body.stderr).to.eq('stderr')
-      done()
-    })
+        expect(body.stderr).to.eq('stderr')
+        done()
+      })
   })
 
   after((done) => {

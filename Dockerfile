@@ -11,7 +11,6 @@ COPY . .
 
 RUN npm run build
 
-ENV PORT=3737
 EXPOSE 3737
 
 CMD ["npm", "start"]

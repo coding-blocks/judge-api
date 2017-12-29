@@ -2,7 +2,8 @@ exports = module.exports = {
   RUN: {
     TIMEOUT: process.env.RUN_TIMOUT || 10000,
   },
-  PORT: process.env.PORT || 3737,
+  HOST: process.env.JUDGEAPI_HOST || 'localhost',
+  PORT: process.env.JUDGEAPI_PORT || 3737,
   DB: {
     DATABASE: process.env.DB_NAME || 'judgeapi',
     USERNAME: process.env.DB_USER|| 'judgeapi',

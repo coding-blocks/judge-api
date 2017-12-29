@@ -1,0 +1,28 @@
+group: travis_latest
+sudo: required
+language: node_js
+node_js:
+ - "8"
+env:
+  global:
+    - DOCKER_COMPOSE_VERSION=1.17.1
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-ce
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - curl -L https://raw.githubusercontent.com/coding-blocks/judge-compose/master/docker-compose-withdb.yml > docker-compose.yml
+  - curl -L https://raw.githubusercontent.com/coding-blocks/judge-compose/master/judgeapi-example.env > .env
+
+install:
+  - docker build -t coding-blocks/judge-api .
+  - docker-compose -p judgecompose up -d
+
+before_script:
+  - docker exec judgecompose_api_1 npm run seedlangs
+
+script:
+  - docker exec judgecompose_api_1 JUDGEAPI_HOST=api npm run test

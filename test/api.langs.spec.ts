@@ -7,14 +7,13 @@ import {Server} from 'http'
 let server: Server
 
 
-
 describe('/api/langs', () => {
   before((done) => {
     server = http.createServer(app)
     server.listen(config.PORT, done)  })
 
   it('GET', (done) => {
-    request.get(`http://localhost:${config.PORT}/api/langs`, (err, resp, bodyStr) => {
+    request.get(`http://${config.HOST}:${config.PORT}/api/langs`, (err, resp, bodyStr) => {
       let body = JSON.parse(bodyStr)
       expect(body[0].lang_slug).to.eq('c')
       done()
