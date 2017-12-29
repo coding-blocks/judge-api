@@ -22,7 +22,7 @@ install:
   - docker-compose -p judgecompose up -d
 
 before_script:
-  - docker exec judgecompose_api_1 ./wait-for-it.sh api:3737 npm run seedlangs
+  - docker exec judgecompose_api_1 scripts/wait-for-it.sh api:3737 -- npm run seedlangs
 
 script:
-  - docker exec -t --env JUDGEAPI_HOST=api --env JUDGEAPI_PORT=2222 judgecompose_api_1  npm run test
+  - docker exec -t --env "JUDGEAPI_HOST=api JUDGEAPI_PORT=2222" judgecompose_api_1  pkill node && DEBUG=test:* npm run test

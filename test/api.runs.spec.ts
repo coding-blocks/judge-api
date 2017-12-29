@@ -2,44 +2,11 @@ import * as request from 'request'
 import {expect} from 'chai'
 import app, {config} from '../src/server'
 import {RunRequestBody, RunResponse} from '../src/routes/api/run'
-import * as amqp from 'amqplib/callback_api'
-import {Channel, Connection} from 'amqplib/callback_api'
-import * as http from 'http'
-import {Server} from 'http'
+import * as debug from 'debug'
 
-let jobQ = 'job_queue'
-let successQ = 'success_queue'
-
-// amqp.connect(`amqp://${config.AMQP.USER}:${config.AMQP.PASS}@${config.AMQP.HOST}:${config.AMQP.PORT}`,
-//   (err, connection) => {
-//     if (err) throw err
-//
-//     connection.createChannel((err2, channel) => {
-//
-//       channel.assertQueue(successQ)
-//       channel.assertQueue(jobQ)
-//       channel.consume(jobQ, (msg) => {
-//         let job = JSON.parse(msg.content.toString())
-//         channel.sendToQueue(successQ, (new Buffer(JSON.stringify(<RunResponse>{
-//           id: job.id,
-//           stderr: 'stderr',
-//           stdout: 'stdout'
-//         }))))
-//         channel.ack(msg)
-//       })
-//
-//
-//     })
-//   })
-
-let server: Server
+const log = debug('test:judgeapi:runs')
 
 describe('/api/runs', () => {
-  before((done) => {
-    server = http.createServer(app)
-    server.listen(config.PORT, done)
-  })
-
 
   it('POST works with correct submission', (done) => {
     let source = `
@@ -63,13 +30,11 @@ describe('/api/runs', () => {
         }
       },
       (err, resp, body) => {
-        expect(body.stderr).to.eq('stderr')
+        log(body)
+        expect(body.stdout).to.eq('SGVsbG8gV29ybGQ=')
         done()
       })
   })
 
-  after((done) => {
-    server.close(done)
-  })
 })
 
