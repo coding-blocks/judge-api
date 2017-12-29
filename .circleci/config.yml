@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Build Docker Image
           command: |
-            docker build -t coding-blocks/judge-api .
+            docker build -t codingblocks/judge-api .
       - run:
           name: Docker Compose
           command: |
@@ -29,7 +29,8 @@ jobs:
       - run:
           name: Seed Language Data
           command: |
-            docker exec judgecompose_api_1 npm run seedlangs
+            docker exec judgecompose_api_1 ./wait-for-it.sh api:3737 npm run seedlangs
       - run:
           name: Run Tests
-          command: docker exec judgecompose_api_1 -e JUDGEAPI_HOST=api npm run test
+          command: |
+            docker exec -t --env JUDGEAPI_HOST=api --env JUDGEAPI_PORT=2222 judgecompose_api_1  npm run test
