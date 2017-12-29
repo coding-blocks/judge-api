@@ -5,7 +5,7 @@ WORKDIR /usr/src/judge-api
 COPY package.json .
 COPY package-lock.json .
 
-RUN npm install
+RUN npm install -D
 
 COPY . .
 
