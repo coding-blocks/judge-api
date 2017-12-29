@@ -6,6 +6,7 @@
 
 #### 0.0.6
  - validate run request body
+ - close db after seedlangs
 
 #### 0.0.5
  - default langs seeding script

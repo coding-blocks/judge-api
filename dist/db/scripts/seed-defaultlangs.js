@@ -7,5 +7,7 @@ models_1.Langs.bulkCreate([
     { lang_slug: 'nodejs6', lang_name: 'NodeJS', lang_version: '6' },
     { lang_slug: 'cpp', lang_name: 'C++', lang_version: '11' },
     { lang_slug: 'c', lang_name: 'C', lang_version: '6' }
-]);
+]).then(() => {
+    models_1.db.close();
+});
 //# sourceMappingURL=seed-defaultlangs.js.map

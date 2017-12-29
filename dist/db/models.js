@@ -13,6 +13,7 @@ const db = new Sequelize(config.DB.DATABASE, config.DB.USERNAME, config.DB.PASSW
         idle: 10000
     }
 });
+exports.db = db;
 const Langs = db.define('langs', {
     lang_slug: {
         type: Sequelize.STRING(10),

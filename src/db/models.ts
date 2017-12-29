@@ -71,5 +71,5 @@ db.sync({})
   .catch((err) => console.error(err))
 
 export {
-  Langs, Submissions, ApiKeys
+  Langs, Submissions, ApiKeys, db
 }
