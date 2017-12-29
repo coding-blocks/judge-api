@@ -1,4 +1,6 @@
 # JUDGE API SERVER
+[![CircleCI](https://img.shields.io/circleci/project/github/coding-blocks/judge-api.svg)](https://circleci.com/gh/coding-blocks/judge-api)
+[![Travis](https://img.shields.io/travis/coding-blocks/judge-api.svg?style=flat-square)](https://travis-ci.org/coding-blocks/judge-api)
 
 ## Testing
 
