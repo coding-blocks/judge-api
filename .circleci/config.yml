@@ -32,4 +32,4 @@ jobs:
             docker exec judgecompose_api_1 npm run seedlangs
       - run:
           name: Run Tests
-          command: docker exec judgecompose_api_1 JUDGEAPI_HOST=api npm run test
+          command: docker exec judgecompose_api_1 -e JUDGEAPI_HOST=api npm run test

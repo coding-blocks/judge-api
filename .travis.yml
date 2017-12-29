@@ -25,4 +25,4 @@ before_script:
   - docker exec judgecompose_api_1 npm run seedlangs
 
 script:
-  - docker exec judgecompose_api_1 JUDGEAPI_HOST=api npm run test
+  - docker exec judgecompose_api_1 -e JUDGEAPI_HOST=api npm run test
