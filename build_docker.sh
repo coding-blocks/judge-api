@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+npm install -D
+npm run build
+
 docker build -t codingblocks/judge-api .
 docker system prune
 

@@ -4,8 +4,10 @@
 
 ### 0.1.0
 
-#### 0.0.4
+#### 0.0.5
  - default langs seeding script
+ - paranoid delete submissions
+ - no timestamps for languages
 
 #### 0.0.3
  - wait-for-it AMQP_HOST:AMQP_PORT

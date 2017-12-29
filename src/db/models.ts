@@ -14,7 +14,6 @@ const db = new Sequelize(config.DB.DATABASE, config.DB.USERNAME, config.DB.PASSW
     idle: 10000
   }
 })
-export interface LangsRow { lang_slug: string, lang_name:string, lang_version: string }
 
 const Langs = db.define('langs', {
   lang_slug: {
@@ -23,7 +22,10 @@ const Langs = db.define('langs', {
   },
   lang_name: Sequelize.STRING(10),
   lang_version: Sequelize.STRING(5)
+}, {
+  timestamps: false
 })
+export type LangsAttributes = { lang_slug: string, lang_name:string, lang_version: string }
 
 const Submissions = db.define('submissions', {
   id: {
@@ -41,6 +43,9 @@ const Submissions = db.define('submissions', {
   start_time: Sequelize.DATE,
   end_time: Sequelize.DATE,
   results: Sequelize.ARRAY(Sequelize.INTEGER)
+}, {
+  paranoid: true, // We do not want to lose any submission data
+  timestamps: false // Start and end times are already logged
 })
 export type SubmissionAttributes = {
   id?: number

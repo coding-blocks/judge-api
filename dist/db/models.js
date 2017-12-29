@@ -20,6 +20,8 @@ const Langs = db.define('langs', {
     },
     lang_name: Sequelize.STRING(10),
     lang_version: Sequelize.STRING(5)
+}, {
+    timestamps: false
 });
 exports.Langs = Langs;
 const Submissions = db.define('submissions', {
@@ -38,6 +40,9 @@ const Submissions = db.define('submissions', {
     start_time: Sequelize.DATE,
     end_time: Sequelize.DATE,
     results: Sequelize.ARRAY(Sequelize.INTEGER)
+}, {
+    paranoid: true,
+    timestamps: false // Start and end times are already logged
 });
 exports.Submissions = Submissions;
 const ApiKeys = db.define('apikeys', {
