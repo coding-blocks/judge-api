@@ -1,6 +1,6 @@
 {
   "name": "judge-api",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Judge API",
   "main": "dist/server.js",
   "repository": "https://bitbucket.org/coding-blocks/judge-api",
