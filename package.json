@@ -3,7 +3,7 @@
   "version": "0.0.8",
   "description": "Judge API",
   "main": "dist/server.js",
-  "repository": "https://bitbucket.org/coding-blocks/judge-api",
+  "repository": "https://github.com/coding-blocks/judge-api",
   "author": "Arnav Gupta <arnav@codingblocks.com>",
   "license": "Apache-2.0",
   "private": true,
@@ -26,6 +26,7 @@
     "@types/request": "^2.0.8",
     "@types/sequelize": "^4.0.79",
     "chai": "^4.1.2",
+    "codecov": "^3.0.0",
     "mkdirp": "^0.5.1",
     "mocha": "^4.0.1",
     "nyc": "^11.3.0",
@@ -42,7 +43,9 @@
     "start": "scripts/wait-for-it.sh ${AMQP_HOST}:${AMQP_PORT} -- node dist/run.js",
     "test": "mocha --timeout 10000 --exit --require ts-node/register test/utils/setup.ts test/*.ts",
     "cover": "nyc npm test",
-    "seedlangs": "node dist/db/scripts/seed-defaultlangs.js"
+    "seedlangs": "node dist/db/scripts/seed-defaultlangs.js",
+    "precodecov": "npm run cover",
+    "codecov": "codecov"
   },
   "apidoc": {
     "title": "judge-blocks API",
