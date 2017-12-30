@@ -2,7 +2,9 @@ import {RunResponse} from '../../src/routes/api/run'
 import * as amqp from 'amqplib/callback_api'
 import {Channel, Connection} from 'amqplib/callback_api'
 import app, {config} from '../../src/server'
+import * as debug from 'debug'
 
+const log = debug('test:mock:queue')
 const jobQ = 'job_queue'
 const successQ = 'success_queue'
 
@@ -17,6 +19,7 @@ before((done) => {
         channel.assertQueue(jobQ)
         channel.consume(jobQ, (msg) => {
           let job = JSON.parse(msg.content.toString())
+          log(job)
           let config = JSON.parse((new Buffer(job.source)).toString('ascii'))
 
           setTimeout(() => {

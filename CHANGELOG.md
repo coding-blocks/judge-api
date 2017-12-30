@@ -4,7 +4,7 @@
 
 ### 0.1.0
 
-#### 0.0.7
+#### 0.0.9
  - test inside docker ecosystem
  - mock out the rabbitmq for testing
 
