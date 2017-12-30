@@ -20,7 +20,7 @@ before((done) => {
         channel.consume(jobQ, (msg) => {
           let job = JSON.parse(msg.content.toString())
           log(job)
-          let config = JSON.parse((new Buffer(job.source)).toString('ascii'))
+          let config = JSON.parse((new Buffer(job.source, 'base64')).toString())
 
           setTimeout(() => {
             channel.sendToQueue(successQ, (new Buffer(JSON.stringify(<RunResponse>{
