@@ -21,7 +21,7 @@ before((done) => {
           let job = JSON.parse(msg.content.toString())
           log(job)
           let config = JSON.parse((new Buffer(job.source, 'base64')).toString())
-          let stdin = JSON.parse((new Buffer(job.stdin, 'base64')).toString())
+          let stdin = (new Buffer(job.stdin, 'base64')).toString()
 
           setTimeout(() => {
             channel.sendToQueue(successQ, (new Buffer(JSON.stringify(<RunResponse>{
