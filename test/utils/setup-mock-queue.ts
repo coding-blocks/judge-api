@@ -17,12 +17,17 @@ before((done) => {
         channel.assertQueue(jobQ)
         channel.consume(jobQ, (msg) => {
           let job = JSON.parse(msg.content.toString())
-          channel.sendToQueue(successQ, (new Buffer(JSON.stringify(<RunResponse>{
-            id: job.id,
-            stderr: 'stderr',
-            stdout: 'stdout'
-          }))))
-          channel.ack(msg)
+          let config = JSON.parse((new Buffer(job.source)).toString('ascii'))
+
+          setTimeout(() => {
+            channel.sendToQueue(successQ, (new Buffer(JSON.stringify(<RunResponse>{
+              id: job.id,
+              stderr: config.STDERR ? job.stdin : undefined,
+              stdout: config.STDOUT ? job.stdin : undefined
+            }))))
+            channel.ack(msg)
+          }, config.TIME_TAKEN * 1000)
+
         })
         done()
 
