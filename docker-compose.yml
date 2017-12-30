@@ -1,0 +1,25 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_USER=judgeapi
+      - POSTGRES_PASSWORD=judgeapi
+      - POSTGRES_DB=judgeapi-dev
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    environment:
+      - RABBITMQ_DEFAULT_USER=codingblocks
+      - RABBITMQ_DEFAULT_PASS=codingblocks
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  api:
+    build: .
+    image: codingblocks/judge-api
+    depends_on:
+      - postgres
+    ports:
+    - "3737:3737"
+    env_file:
+      - test.env

@@ -110,3 +110,6 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+.circleci
+.travis.yml
+docker-compose.yml

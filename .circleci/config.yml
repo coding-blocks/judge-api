@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Build Docker Image
           command: |
-            docker build -t codingblocks/judge-api .
+            docker-compose build
       - run:
           name: Docker Compose
           command: |
@@ -35,7 +35,7 @@ jobs:
           command: |
             mkdir -p coverage
             docker kill judgecompose_api_1
-            docker run -t --env-file .env \
+            docker run -t --env-file test.env \
               -v "$PWD/coverage:/usr/src/judge-api/coverage" \
               --network judgecompose_default \
               --env "DEBUG=test:* JUDGEAPI_HOST=api JUDGEAPI_PORT=2222" codingblocks/judge-api \
