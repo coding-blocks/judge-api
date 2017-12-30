@@ -4,6 +4,10 @@
 
 ### 0.1.0
 
+#### 0.0.7
+ - test inside docker ecosystem
+ - mock out the rabbitmq for testing
+
 #### 0.0.6
  - validate run request body
  - close db after seedlangs
