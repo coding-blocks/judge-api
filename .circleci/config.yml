@@ -23,8 +23,6 @@ jobs:
       - run:
           name: Docker Compose
           command: |
-            curl -L https://raw.githubusercontent.com/coding-blocks/judge-compose/master/docker-compose-withdb.yml > docker-compose.yml
-            curl -L https://raw.githubusercontent.com/coding-blocks/judge-compose/master/judgeapi-example.env > .env
             docker-compose -p judgecompose up -d
       - run:
           name: Seed Language Data
