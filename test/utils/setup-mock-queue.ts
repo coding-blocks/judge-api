@@ -24,6 +24,7 @@ before((done) => {
           }))))
           channel.ack(msg)
         })
+        done()
 
 
       })
