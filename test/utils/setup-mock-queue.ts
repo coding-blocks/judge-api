@@ -21,12 +21,13 @@ before((done) => {
           let job = JSON.parse(msg.content.toString())
           log(job)
           let config = JSON.parse((new Buffer(job.source, 'base64')).toString())
+          let stdin = JSON.parse((new Buffer(job.stdin, 'base64')).toString())
 
           setTimeout(() => {
             channel.sendToQueue(successQ, (new Buffer(JSON.stringify(<RunResponse>{
               id: job.id,
-              stderr: config.STDERR ? job.stdin : undefined,
-              stdout: config.STDOUT ? job.stdin : undefined
+              stderr: config.STDERR ? stdin : undefined,
+              stdout: config.STDOUT ? stdin : undefined
             }))))
             channel.ack(msg)
           }, config.TIME_TAKEN * 1000)
