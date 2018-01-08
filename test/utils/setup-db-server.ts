@@ -1,9 +1,9 @@
-import {config} from '../../src/server'
 import * as http from 'http'
 import app from '../../src/server'
 import {Server} from 'http'
 import {db} from '../../src/db/models'
 import * as debug from 'debug'
+import config = require('../../config')
 
 let server: Server
 const log = debug('test:judge:api')

@@ -1,8 +1,10 @@
 import {RunResponse} from '../../src/routes/api/run'
 import * as amqp from 'amqplib/callback_api'
 import {Channel, Connection} from 'amqplib/callback_api'
-import app, {config} from '../../src/server'
+import app from '../../src/server'
 import * as debug from 'debug'
+import config = require('../../config')
+
 
 const log = debug('test:mock:queue')
 const jobQ = 'job_queue'

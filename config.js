@@ -1,6 +1,6 @@
 exports = module.exports = {
   RUN: {
-    TIMEOUT: process.env.RUN_TIMOUT || 10000,
+    TIMEOUT: process.env.RUN_TIMEOUT || 10000,
   },
   HOST: process.env.JUDGEAPI_HOST || 'localhost',
   PORT: process.env.JUDGEAPI_PORT || 3737,

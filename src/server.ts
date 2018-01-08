@@ -1,6 +1,5 @@
 import express = require('express')
 import dbg = require('debug')
-import config = require('../config')
 import path = require ('path')
 import apiRoute from './routes/api'
 
@@ -14,4 +13,3 @@ app.use('/docs', express.static(path.join(__dirname, '../docs')))
 app.use('/api', apiRoute)
 
 export default app
-export {config}

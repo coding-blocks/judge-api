@@ -2,8 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const dbg = require("debug");
-const config = require("../config");
-exports.config = config;
 const path = require("path");
 const api_1 = require("./routes/api");
 const debug = dbg('server:main');

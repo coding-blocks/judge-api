@@ -1,4 +1,5 @@
-import app, {config} from './server'
+import app from './server'
+import config = require('../config')
 import * as debug from 'debug'
 import {db} from './db/models'
 

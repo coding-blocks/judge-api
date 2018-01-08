@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const amqp = require("amqplib/callback_api");
 const events_1 = require("events");
-const server_1 = require("../server");
 const debug = require('debug')('judge:api:jobqueue');
+const config = require("../../config");
 let jobQ = 'job_queue';
 let successQ = 'success_queue';
 let jobChannel;
@@ -13,7 +13,7 @@ exports.successListener = successListener;
  * Connect to RabbitMQ and save channel to
  * @link {jobChannel}
  */
-amqp.connect(`amqp://${server_1.config.AMQP.USER}:${server_1.config.AMQP.PASS}@${server_1.config.AMQP.HOST}:${server_1.config.AMQP.PORT}`, (err, connection) => {
+amqp.connect(`amqp://${config.AMQP.USER}:${config.AMQP.PASS}@${config.AMQP.HOST}:${config.AMQP.PORT}`, (err, connection) => {
     if (err)
         throw err;
     connection.createChannel((err, channel) => {

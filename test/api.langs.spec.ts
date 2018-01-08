@@ -1,7 +1,9 @@
 import * as request from 'request'
 import {expect} from 'chai'
-import app, {config} from '../src/server'
+import app from '../src/server'
 import * as debug from 'debug'
+import config = require('../config')
+
 
 const log = debug('test:judgeapi:langs')
 

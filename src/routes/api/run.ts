@@ -1,8 +1,8 @@
 import {Response, Router} from 'express'
 import {SubmissionAttributes, Submissions} from '../../db/models'
 import {RunJob, queueJob, successListener} from '../../rabbitmq/jobqueue'
-import {config} from '../../server'
 import {isInvalidRunRequest} from '../../validators/SubmissionValidators'
+import config = require('../../../config')
 
 const route: Router = Router()
 
@@ -74,8 +74,8 @@ route.post('/', (req, res, next) => {
     runPool[submission.id] = res
     setTimeout(() => {
       if (runPool[submission.id]) {
-        runPool[submission.id].status(567).json({
-          code: 567,
+        runPool[submission.id].status(408).json({
+          code: 408,
           message: "Compile/Run timed out",
         })
         delete runPool[submission.id]

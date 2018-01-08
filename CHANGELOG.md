@@ -3,6 +3,7 @@
 ## 1.0.0
 
 ### 0.1.0
+ - test for timeouts too
 
 #### 0.0.9
  - test inside docker ecosystem

@@ -40,7 +40,7 @@
     "apidoc": "apidoc -i src -o docs",
     "prestart": "npm run build && npm run apidoc",
     "start": "scripts/wait-for-it.sh ${AMQP_HOST}:${AMQP_PORT} -- node dist/run.js",
-    "test": "node_modules/.bin/mocha --timeout 10000 --exit --require ts-node/register test/utils/setup*.ts test/*.ts",
+    "test": "node_modules/.bin/mocha --timeout 12000 --exit --require ts-node/register test/utils/setup*.ts test/*.ts",
     "cover": "nyc npm test",
     "seedlangs": "node dist/db/scripts/seed-defaultlangs.js",
     "precodecov": "npm run cover",
