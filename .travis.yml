@@ -8,6 +8,7 @@ env:
     - DOCKER_COMPOSE_VERSION=1.17.1
 
 before_install:
+  - sudo service postgresql stop
   - sudo apt-get update
   - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-ce
   - sudo rm /usr/local/bin/docker-compose
