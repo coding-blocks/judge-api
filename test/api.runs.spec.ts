@@ -4,9 +4,17 @@ import app from '../src/server'
 import {RunRequestBody, RunResponse} from '../src/routes/api/run'
 import * as debug from 'debug'
 import config = require('../config')
+import {CoreOptions} from 'request'
 
 
 const log = debug('test:judgeapi:runs')
+
+const reqOptions: CoreOptions = {
+  baseUrl: `http://${config.HOST}:${config.PORT}/`,
+  headers: {
+    'Authorization': 'Bearer 7718330d2794406c980bdbded6c9dc1d'
+  }
+}
 
 describe('/api/runs', () => {
 
@@ -18,8 +26,10 @@ describe('/api/runs', () => {
     }
     let stdin = 'OUR STDOUT DATA'
 
-    request.post(`http://${config.HOST}:${config.PORT}/api/runs`,
+    request.post(`api/runs`,
       {
+        baseUrl: reqOptions.baseUrl,
+        headers: reqOptions.headers,
         json: <RunRequestBody> {
           source: (new Buffer(JSON.stringify(source)).toString('base64')),
           lang: 'cpp',
@@ -41,8 +51,10 @@ describe('/api/runs', () => {
     }
     let stdin = 'OUR STDOUT DATA'
 
-    request.post(`http://${config.HOST}:${config.PORT}/api/runs`,
+    request.post(`api/runs`,
       {
+        baseUrl: reqOptions.baseUrl,
+        headers: reqOptions.headers,
         json: <RunRequestBody> {
           source: (new Buffer(JSON.stringify(source)).toString('base64')),
           lang: 'cpp',
@@ -64,8 +76,10 @@ describe('/api/runs', () => {
     }
     let stdin = 'OUR STDOUT DATA'
 
-    request.post(`http://${config.HOST}:${config.PORT}/api/runs`,
+    request.post(`api/runs`,
       {
+        baseUrl: reqOptions.baseUrl,
+        headers: reqOptions.headers,
         json: <RunRequestBody> {
           source: (new Buffer(JSON.stringify(source)).toString('base64')),
           lang: 'cpp',

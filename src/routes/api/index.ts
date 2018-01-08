@@ -1,7 +1,11 @@
-import {Router} from 'express'
+import {NextFunction, Request, Response, Router} from 'express'
 import {route as run} from './run'
 import {route as submissions} from './submissions'
 import {route as langs} from './langs'
+import {checkValidApiKey} from '../../validators/ApiKeyValidators'
+import * as debug from 'debug'
+
+const log = debug('judge:api')
 
 /**
  * @apiDefine AvailableLangs
@@ -10,6 +14,17 @@ import {route as langs} from './langs'
  */
 
 const route: Router = Router()
+
+route.use((req: Request, res: Response, next: NextFunction) => {
+  log('Checking API validity')
+  checkValidApiKey(req)
+    .then(() => next())
+    .catch((err: Error) => res.status(403).json({
+      code: 403,
+      message: err.message
+    }))
+})
+
 route.use('/runs', run)
 route.use('/submissions', submissions)
 route.use('/langs', langs)

@@ -10,6 +10,10 @@ models_1.db.sync()
     { lang_slug: 'cpp', lang_name: 'C++', lang_version: '11' },
     { lang_slug: 'c', lang_name: 'C', lang_version: '6' }
 ]))
+    .then(() => models_1.ApiKeys.sync({ force: true }))
+    .then(() => models_1.ApiKeys.bulkCreate([
+    { id: 1, key: '7718330d2794406c980bdbded6c9dc1d', whitelist_domains: ['*'], whitelist_ips: ['*'] }
+]))
     .finally(() => {
     try {
         models_1.db.close();

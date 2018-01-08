@@ -52,7 +52,17 @@ const ApiKeys = db.define('apikeys', {
         autoIncrement: true,
         primaryKey: true
     },
-    key: Sequelize.STRING(64)
+    key: {
+        type: Sequelize.STRING(32),
+        unique: true,
+        allowNull: false
+    },
+    whitelist_domains: {
+        type: Sequelize.ARRAY(Sequelize.STRING)
+    },
+    whitelist_ips: {
+        type: Sequelize.ARRAY(Sequelize.STRING)
+    }
 });
 exports.ApiKeys = ApiKeys;
 Submissions.belongsTo(ApiKeys);
