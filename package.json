@@ -63,8 +63,8 @@
     "sourceMap": true
   },
   "engines": {
-    "node": "10",
-    "npm": "5",
+    "node": ">=8",
+    "npm": ">=5",
     "yarn": "1"
   }
 }
