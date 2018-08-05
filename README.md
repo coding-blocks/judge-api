@@ -6,6 +6,8 @@
 [![Build Status](https://travis-ci.org/coding-blocks/judge-api.svg?branch=master)](https://travis-ci.org/coding-blocks/judge-api)
 [![codecov](https://codecov.io/gh/coding-blocks/judge-api/branch/master/graph/badge.svg)](https://codecov.io/gh/coding-blocks/judge-api)
 
+[![apidocs](https://img.shields.io/badge/api-docs-blue.svg?style=popout-square)](http://docs.judge.codingblocks.in/)
+
 
 
 ## Testing
