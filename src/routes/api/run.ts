@@ -1,4 +1,4 @@
-import {Response, Router} from 'express'
+import {Response, Router, Request} from 'express'
 import {SubmissionAttributes, Submissions} from '../../db/models'
 import {RunJob, queueJob, successListener} from '../../rabbitmq/jobqueue'
 import {isInvalidRunRequest} from '../../validators/SubmissionValidators'
