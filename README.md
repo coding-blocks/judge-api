@@ -28,3 +28,17 @@ If using a fresh db, seed the languages before testing
 npm run build
 npm run seedlangs
 ```
+
+
+## Requirements
+
+### Database (Postgres)
+We need a PostgreSQL database to run. Please configure the following env variables -
+
+```env
+    DB_NAME='judgeapi',
+    DB_USER='judgeapi',
+    DB_PASS='judgeapi',
+    DB_HOST='localhost'
+```
+### Queue (RabbitMQ)
