@@ -24,7 +24,7 @@ export interface RunResponse {
 const runPool: {[x: number]: Response} = {}
 
 /**
- * @api {post} /run POST /run
+ * @api {post} /runs POST /runs
  * @apiDescription Run a code and get its output
  * @apiName PostRun
  * @apiGroup Run
