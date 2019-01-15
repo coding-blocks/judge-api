@@ -12,6 +12,15 @@ export function isInvalidRunRequest(req: Request): Error | boolean {
   if (!req.body.stdin) {
     req.body.stdin = ''
   }
+  if (!req.body.mode) {
+    req.body.mode = 'sync'
+  }
+  if (!['sync', 'callback'].includes(req.body.mode)) {
+    return new Error('Mode must be one of sync, callback')
+  }
+  if (req.body.mode === 'callback' && !req.body.callback) {
+    return new Error('Must specify a callback for callback mode')
+  }
 
   return false
 }

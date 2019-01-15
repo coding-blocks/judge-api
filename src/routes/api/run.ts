@@ -1,4 +1,6 @@
 import {Response, Router, Request} from 'express'
+import axios from 'axios'
+
 import {SubmissionAttributes, Submissions} from '../../db/models'
 import {RunJob, queueJob, successListener} from '../../rabbitmq/jobqueue'
 import {isInvalidRunRequest} from '../../validators/SubmissionValidators'
@@ -9,7 +11,9 @@ const route: Router = Router()
 export type RunRequestBody = {
   source: string, //Base64 encoded
   lang: string,
-  stdin: string
+  stdin: string,
+  mode: string,
+  callback?: string
 }
 export interface RunRequest extends Request {
   body: RunRequestBody
@@ -21,7 +25,62 @@ export interface RunResponse {
   stderr: string
 }
 
-const runPool: {[x: number]: Response} = {}
+export type RunPoolElement = {
+  mode: string,
+  res: Response,
+  callback?: string
+}
+
+const runPool: {[x: number]: RunPoolElement} = {}
+
+const handleTimeoutForSubmission = function (submissionId: number) {
+  const job = runPool[submissionId]
+  const errorResponse = {
+    id: submissionId,
+    code: 408,
+    message: "Compile/Run timed out",
+  }
+
+  switch (job.mode) {
+    case 'sync': 
+      job.res.status(408).json(errorResponse)
+      break;
+    case 'callback':
+      axios.post(job.callback, errorResponse)
+  }
+}
+
+const handleSuccessForSubmission = function (result: RunResponse) {
+  const job = runPool[result.id]
+  switch (job.mode) {
+    case 'sync':
+      job.res.status(200).json(result)
+      break;
+    case 'callback':
+      // send a post request to callback 
+      axios.post(job.callback, result)
+      break;
+  }
+}
+
+/**
+ * Returns a runPoolElement for request
+ */
+const getRunPoolElement = function (body: RunRequestBody, res: Response): RunPoolElement {
+  switch (body.mode) {
+    case 'sync':
+      return ({
+        mode: 'sync',
+        res
+      })
+    case 'callback':
+      return ({
+        mode: 'callback',
+        res,
+        callback: body.callback
+      })
+  }
+}
 
 /**
  * @api {post} /runs POST /runs
@@ -70,18 +129,21 @@ route.post('/', (req, res, next) => {
       lang: req.body.lang,
       stdin: req.body.stdin
     })
+
     // Put into pool and wait for judge-worker to respond
-    runPool[submission.id] = res
+    runPool[submission.id] = getRunPoolElement(req.body, res)
+
     setTimeout(() => {
       if (runPool[submission.id]) {
-        runPool[submission.id].status(408).json({
-          id: submission.id,
-          code: 408,
-          message: "Compile/Run timed out",
-        })
+        handleTimeoutForSubmission(submission.id)
         delete runPool[submission.id]
       }
     }, config.RUN.TIMEOUT)
+
+    switch (req.body.mode) {
+      case 'callback':
+        res.sendStatus(200)
+    }
 
   }).catch(err => {
     res.status(501).json({
@@ -97,7 +159,7 @@ route.post('/', (req, res, next) => {
  */
 successListener.on('success', (result: RunResponse) => {
   if (runPool[result.id]) {
-    runPool[result.id].status(200).json(result)
+    handleSuccessForSubmission(result)
     delete runPool[result.id]
   }
   Submissions.update({
