@@ -92,6 +92,8 @@ const getRunPoolElement = function (body: RunRequestBody, res: Response): RunPoo
  * @apiParam {String(Base64)} source source code to run (encoded in base64)
  * @apiParam {Enum} lang Language of code to execute
  * @apiParam {String(Base64)} input [Optional] stdin input for the program (encoded in base64)
+ * @apiParam {Enum} mode [Optional] mode for request. Default = `sync`, see: https://github.com/coding-blocks/judge-api/issues/16
+ * @apiParam {String)} callback [Optional] callback url for request. Required for `mode = callback`
  *
  * @apiUse AvailableLangs
  *
@@ -100,7 +102,7 @@ const getRunPoolElement = function (body: RunRequestBody, res: Response): RunPoo
  * @apiSuccess {String(Base64)} stderr Output of stderr of execution (encoded in base64)
  * @apiSuccess {Number} statuscode Result of operation
  *
- * @apiSuccessExample {JSON} Success-Response:
+ * @apiSuccessExample {JSON} Success-Response(mode=sync):
  *  HTTP/1.1 200 OK
  *  {
  *    "id": 10,
@@ -108,6 +110,8 @@ const getRunPoolElement = function (body: RunRequestBody, res: Response): RunPoo
  *    "stdout": "NA0KMg0KMw=="
  *    "stderr": "VHlwZUVycm9y"
  *  }
+ *  @apiSuccessExample {JSON} Success-Response(mode=callback):
+ *  HTTP/1.1 200 OK
  */
 route.post('/', (req, res, next) => {
   const invalidRequest = isInvalidRunRequest(req)
