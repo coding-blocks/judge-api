@@ -5,6 +5,7 @@ import {SubmissionAttributes, Submissions, db} from '../../db/models'
 import {RunJob, queueJob, successListener} from '../../rabbitmq/jobqueue'
 import {isInvalidRunRequest} from '../../validators/SubmissionValidators'
 import {upload} from '../../utils/s3'
+import {normalizeRunJob} from '../../utils'
 import config = require('../../../config')
 
 const route: Router = Router()
@@ -148,14 +149,16 @@ route.post('/', (req, res, next) => {
   Submissions.create(<SubmissionAttributes>{
     lang: req.body.lang,
     start_time: new Date()
-  }).then((submission: SubmissionAttributes) => {
+  }).then(async (submission: SubmissionAttributes) => {
 
-    let queued = queueJob(<RunJob>{
+    const job: RunJob = await normalizeRunJob({
       id: submission.id,
       source: req.body.source,
       lang: req.body.lang,
       stdin: req.body.stdin
-    })
+    }, req.body.enc)
+
+    let queued = queueJob(job)
 
     // Put into pool and wait for judge-worker to respond
     runPool[submission.id] = getRunPoolElement(req.body, res)
