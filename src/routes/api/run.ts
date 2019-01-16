@@ -111,6 +111,7 @@ const getRunPoolElement = function (body: RunRequestBody, res: Response): RunPoo
  * @apiParam {String(Base64)} input [Optional] stdin input for the program (encoded in base64)
  * @apiParam {Enum} mode [Optional] mode for request. Default = `sync`, see: https://github.com/coding-blocks/judge-api/issues/16
  * @apiParam {String)} callback [Optional] callback url for request. Required for `mode = callback`
+ * @apiParam {String)} enc [Optional] Encoding type for stdin and source. Can be `url`|`base64`. Default = 'base64' 
  *
  * @apiUse AvailableLangs
  *
