@@ -1,9 +1,10 @@
 import {Response, Router, Request} from 'express'
 import axios from 'axios'
 
-import {SubmissionAttributes, Submissions} from '../../db/models'
+import {SubmissionAttributes, Submissions, db} from '../../db/models'
 import {RunJob, queueJob, successListener} from '../../rabbitmq/jobqueue'
 import {isInvalidRunRequest} from '../../validators/SubmissionValidators'
+import {upload} from '../../utils/s3'
 import config = require('../../../config')
 
 const route: Router = Router()
@@ -58,7 +59,22 @@ const handleSuccessForSubmission = function (result: RunResponse) {
       break;
     case 'callback':
       // send a post request to callback 
-      axios.post(job.callback, result)
+      (async () => {
+        // 1. upload the result to s3 and get the url
+        const {url} = await upload(result)
+
+        // 2. save the url in db
+        await Submissions.update({
+          outputs: [url]
+        }, {
+          where: {
+            id: result.id
+          }
+        })
+
+        // make the callback request
+        await axios.post(job.callback, {id: result.id, outputs: [url]})
+      })()
       break;
   }
 }
@@ -112,6 +128,13 @@ const getRunPoolElement = function (body: RunRequestBody, res: Response): RunPoo
  *  }
  *  @apiSuccessExample {JSON} Success-Response(mode=callback):
  *  HTTP/1.1 200 OK
+ * 
+ *  @apiSuccessExample {JSON} Body for Callback(mode=callback):
+ *  HTTP/1.1 200 OK
+ *  {
+ *    "id": 10,
+ *    "outputs": ["http://localhost/judge-submissions/file.json"]
+ *  }
  */
 route.post('/', (req, res, next) => {
   const invalidRequest = isInvalidRunRequest(req)

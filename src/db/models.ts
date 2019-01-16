@@ -42,7 +42,8 @@ const Submissions = db.define('submissions', {
   },
   start_time: Sequelize.DATE,
   end_time: Sequelize.DATE,
-  results: Sequelize.ARRAY(Sequelize.INTEGER)
+  results: Sequelize.ARRAY(Sequelize.INTEGER),
+  outputs: Sequelize.ARRAY(Sequelize.STRING)
 }, {
   paranoid: true, // We do not want to lose any submission data
   timestamps: false // Start and end times are already logged
@@ -53,6 +54,7 @@ export type SubmissionAttributes = {
   start_time: Date
   end_time?: Date
   results?: Array<number>
+  outputs?: Array<string>
 }
 
 const ApiKeys = db.define('apikeys', {
