@@ -128,6 +128,9 @@ const getRunPoolElement = function (body: RunRequestBody, res: Response): RunPoo
  *  }
  *  @apiSuccessExample {JSON} Success-Response(mode=callback):
  *  HTTP/1.1 200 OK
+ *  {
+ *    "id": 10
+ *  }
  * 
  *  @apiSuccessExample {JSON} Body for Callback(mode=callback):
  *  HTTP/1.1 200 OK
@@ -169,7 +172,9 @@ route.post('/', (req, res, next) => {
 
     switch (req.body.mode) {
       case 'callback':
-        res.sendStatus(200)
+        res.json({
+          id: submission.id
+        })
     }
 
   }).catch(err => {
