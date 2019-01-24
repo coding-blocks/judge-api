@@ -27,7 +27,7 @@ const Langs = db.define('langs', {
 })
 export type LangsAttributes = { lang_slug: string, lang_name:string, lang_version: string }
 
-const Submissions = db.define('submissions', {
+const Submissions = db.define<SubmissionInstance ,SubmissionAttributes>('submissions', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -42,7 +42,8 @@ const Submissions = db.define('submissions', {
   },
   start_time: Sequelize.DATE,
   end_time: Sequelize.DATE,
-  results: Sequelize.ARRAY(Sequelize.INTEGER)
+  results: Sequelize.ARRAY(Sequelize.INTEGER),
+  outputs: Sequelize.ARRAY(Sequelize.STRING),
 }, {
   paranoid: true, // We do not want to lose any submission data
   timestamps: false // Start and end times are already logged
@@ -53,7 +54,10 @@ export type SubmissionAttributes = {
   start_time: Date
   end_time?: Date
   results?: Array<number>
+  outputs?: Array<string>
 }
+
+export type SubmissionInstance = Sequelize.Instance<SubmissionAttributes> & SubmissionAttributes
 
 const ApiKeys = db.define('apikeys', {
   id: {

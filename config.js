@@ -23,5 +23,14 @@ exports = module.exports = {
     PASS: process.env.AMQP_PASS || 'codingblocks',
     HOST: process.env.AMQP_HOST || 'localhost',
     PORT: process.env.AMQP_PORT || 5672
+  },
+
+  S3: {
+    endpoint: process.env.S3_ENDPOINT || 'localhost',
+    port: process.env.S3_PORT || 9000,
+    ssl: process.env.S3_SSL || false,
+    accessKey: process.env.S3_ACCESS_KEY || '',
+    secretKey: process.env.S3_SECRET_KEY || '',
+    bucket: process.env.S3_BUCKET || 'judge-submissions'
   }
 }
