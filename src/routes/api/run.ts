@@ -73,7 +73,7 @@ const handleSuccessForSubmission = function (result: RunResponse) {
         })
 
         // make the callback request
-        await axios.post(job.callback, {id: result.id, outputs: [url]})
+        await axios.post(job.callback, {id: result.id, code: 200, outputs: [url]})
       })()
       break;
   }
@@ -136,6 +136,7 @@ const getRunPoolElement = function (body: RunRequestBody, res: Response): RunPoo
  *  HTTP/1.1 200 OK
  *  {
  *    "id": 10,
+ *    "code": 200,
  *    "outputs": ["http://localhost/judge-submissions/file.json"]
  *  }
  */
