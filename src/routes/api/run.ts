@@ -64,7 +64,7 @@ const handleSuccessForSubmission = function (result: RunResponse) {
         const {url} = await upload(result)
 
         // 2. save the url in db
-        await Submissions.update({
+        await Submissions.update(<any>{
           outputs: [url]
         }, {
           where: {
@@ -189,7 +189,7 @@ successListener.on('success', (result: RunResponse) => {
     handleSuccessForSubmission(result)
     delete runPool[result.id]
   }
-  Submissions.update({
+  Submissions.update(<any>{
     end_time: new Date()
   }, {
     where: {

@@ -27,7 +27,7 @@ const Langs = db.define('langs', {
 })
 export type LangsAttributes = { lang_slug: string, lang_name:string, lang_version: string }
 
-const Submissions = db.define<Sequelize.Instance<SubmissionAttributes> ,SubmissionAttributes>('submissions', {
+const Submissions = db.define<SubmissionInstance ,SubmissionAttributes>('submissions', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -56,6 +56,8 @@ export type SubmissionAttributes = {
   results?: Array<number>
   outputs?: Array<string>
 }
+
+export type SubmissionInstance = Sequelize.Instance<SubmissionAttributes> & SubmissionAttributes
 
 const ApiKeys = db.define('apikeys', {
   id: {
