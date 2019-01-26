@@ -1,2 +1,1 @@
-alter table submissions 
-  add column outputs varchar[];
+alter table submissions add column outputs varchar[];
