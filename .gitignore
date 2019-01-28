@@ -115,3 +115,4 @@ fabric.properties
 
 # Config
 secrets.json
+.vscode

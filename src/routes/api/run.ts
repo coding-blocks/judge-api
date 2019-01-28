@@ -5,6 +5,7 @@ import {SubmissionAttributes, Submissions, db} from '../../db/models'
 import {RunJob, queueJob, successListener} from '../../rabbitmq/jobqueue'
 import {isInvalidRunRequest} from '../../validators/SubmissionValidators'
 import {upload} from '../../utils/s3'
+import {normalizeRunJob} from '../../utils'
 import config = require('../../../config')
 
 const route: Router = Router()
@@ -111,6 +112,7 @@ const getRunPoolElement = function (body: RunRequestBody, res: Response): RunPoo
  * @apiParam {String(Base64)} input [Optional] stdin input for the program (encoded in base64)
  * @apiParam {Enum} mode [Optional] mode for request. Default = `sync`, see: https://github.com/coding-blocks/judge-api/issues/16
  * @apiParam {String)} callback [Optional] callback url for request. Required for `mode = callback`
+ * @apiParam {String)} enc [Optional] Encoding type for stdin and source. Can be `url`|`base64`. Default = 'base64' 
  *
  * @apiUse AvailableLangs
  *
@@ -153,14 +155,16 @@ route.post('/', (req, res, next) => {
   Submissions.create(<SubmissionAttributes>{
     lang: req.body.lang,
     start_time: new Date()
-  }).then((submission: SubmissionAttributes) => {
+  }).then(async (submission: SubmissionAttributes) => {
 
-    let queued = queueJob(<RunJob>{
+    const job: RunJob = await normalizeRunJob({
       id: submission.id,
       source: req.body.source,
       lang: req.body.lang,
       stdin: req.body.stdin
-    })
+    }, req.body.enc)
+
+    let queued = queueJob(job)
 
     // Put into pool and wait for judge-worker to respond
     runPool[submission.id] = getRunPoolElement(req.body, res)
