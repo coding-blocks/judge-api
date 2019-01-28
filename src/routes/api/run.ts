@@ -62,6 +62,7 @@ const handleSuccessForSubmission = function (result: RunResponse) {
       // send a post request to callback 
       (async () => {
         // 1. upload the result to s3 and get the url
+        const code = result.stderr ? 400 : 200
         const {url} = await upload(result)
 
         // 2. save the url in db
@@ -74,7 +75,7 @@ const handleSuccessForSubmission = function (result: RunResponse) {
         })
 
         // make the callback request
-        await axios.post(job.callback, {id: result.id, outputs: [url]})
+        await axios.post(job.callback, {id: result.id, code, outputs: [url]})
       })()
       break;
   }
@@ -138,6 +139,7 @@ const getRunPoolElement = function (body: RunRequestBody, res: Response): RunPoo
  *  HTTP/1.1 200 OK
  *  {
  *    "id": 10,
+ *    "code": 200,
  *    "outputs": ["http://localhost/judge-submissions/file.json"]
  *  }
  */
