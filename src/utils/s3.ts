@@ -5,8 +5,8 @@ import config = require('../../config')
 
 const client = new Minio.Client({
   endPoint: config.S3.endpoint,
-  port: config.S3.port,
-  useSSL: config.S3.ssl,
+  port: +config.S3.port,
+  useSSL: !!config.S3.ssl,
   accessKey: config.S3.accessKey,
   secretKey: config.S3.secretKey,
 })
