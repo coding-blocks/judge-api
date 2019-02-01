@@ -52,8 +52,8 @@
   },
   "apidoc": {
     "title": "judge-blocks API",
-    "url": "http://judge.cb.lk/api",
-    "sampleUrl": "http://judge.cb.lk/api"
+    "url": "https://judge2.codingblocks.com/api",
+    "sampleUrl": "https://judge2.codingblocks.com/api"
   },
   "nyc": {
     "extension": [
