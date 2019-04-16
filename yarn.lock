@@ -179,9 +179,10 @@
     "@types/form-data" "*"
     "@types/node" "*"
 
-"@types/sequelize@^4.0.79":
-  version "4.0.79"
-  resolved "https://registry.yarnpkg.com/@types/sequelize/-/sequelize-4.0.79.tgz#74c366407a978e493e70d7cea3d80c681aed15c0"
+"@types/sequelize@^4.27.48":
+  version "4.27.48"
+  resolved "https://registry.yarnpkg.com/@types/sequelize/-/sequelize-4.27.48.tgz#59bb61e011c92c70d9ddd8d760ee3a82631ad69d"
+  integrity sha512-ucmRwubpewi2zjSfoCzfB7CMXoxJyn2TkfNdRgLxa3RVxhygclH7yfKOkPW7ef07uPatrn39ermVKDnr6GH+Eg==
   dependencies:
     "@types/bluebird" "*"
     "@types/continuation-local-storage" "*"
