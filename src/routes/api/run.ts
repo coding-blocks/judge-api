@@ -50,6 +50,8 @@ const handleTimeoutForSubmission = function (submissionId: number) {
     case 'callback':
       axios.post(job.callback, errorResponse)
   }
+
+  delete runPool[submissionId]
 }
 
 const handleSuccessForSubmission = function (result: RunResponse) {
@@ -79,6 +81,8 @@ const handleSuccessForSubmission = function (result: RunResponse) {
       })()
       break;
   }
+
+  delete runPool[result.id]
 }
 
 /**
@@ -172,7 +176,6 @@ route.post('/', (req, res, next) => {
     setTimeout(() => {
       if (runPool[submission.id]) {
         handleTimeoutForSubmission(submission.id)
-        delete runPool[submission.id]
       }
     }, config.RUN.TIMEOUT)
 
@@ -198,7 +201,6 @@ route.post('/', (req, res, next) => {
 successListener.on('success', (result: RunResponse) => {
   if (runPool[result.id]) {
     handleSuccessForSubmission(result)
-    delete runPool[result.id]
   }
   Submissions.update(<any>{
     end_time: new Date()
