@@ -9,7 +9,7 @@
   "private": true,
   "dependencies": {
     "@types/amqplib": "^0.5.4",
-    "amqplib": "^0.5.2",
+    "amqplib": "0.5.3",
     "apidoc": "^0.17.6",
     "axios": "^0.18.0",
     "base-64": "^0.1.0",
