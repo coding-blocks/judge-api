@@ -15,25 +15,32 @@ export type RunRequestBody = {
   lang: string,
   stdin: string,
   mode: string,
-  callback?: string
+  callback?: string,
 }
 export interface RunRequest extends Request {
-  body: RunRequestBody
+  body: RunRequestBody,
 }
 
 export interface RunResponse {
   id: number,
   stdout: string,
-  stderr: string
+  stderr: string,
 }
 
 export type RunPoolElement = {
   mode: string,
   res: Response,
-  callback?: string
+  callback?: string,
+}
+
+export type PollPoolElement = {
+  code: number,
+  status: string,
+  output: RunResponse,
 }
 
 const runPool: {[x: number]: RunPoolElement} = {}
+const pollPool: {[x: number]: PollPoolElement} = {}
 
 const handleTimeoutForSubmission = function (submissionId: number) {
   const job = runPool[submissionId]
@@ -49,37 +56,52 @@ const handleTimeoutForSubmission = function (submissionId: number) {
       break;
     case 'callback':
       axios.post(job.callback, errorResponse)
+      break;
+    case 'poll':
+      delete pollPool[submissionId]
   }
-
   delete runPool[submissionId]
 }
 
-const handleSuccessForSubmission = function (result: RunResponse) {
+/**
+ * returns status code and url of result
+ */
+const saveToDb = async function (result: RunResponse) {
+  // 1. upload the result to s3 and get the url
+  const code = result.stderr ? 400 : 200
+  const {url} = await upload(result)
+
+  // 2. save the url in db
+  await Submissions.update(<any>{
+    outputs: [url]
+  }, {
+    where: {
+      id: result.id
+    }
+  })
+  return {code, url}
+}
+
+
+const handleSuccessForSubmission = async function (result: RunResponse) {
   const job = runPool[result.id]
+  const {code, url} = await saveToDb(result)
+  
   switch (job.mode) {
     case 'sync':
       job.res.status(200).json(result)
       break;
     case 'callback':
-      // send a post request to callback 
-      (async () => {
-        // 1. upload the result to s3 and get the url
-        const code = result.stderr ? 400 : 200
-        const {url} = await upload(result)
-
-        // 2. save the url in db
-        await Submissions.update(<any>{
-          outputs: [url]
-        }, {
-          where: {
-            id: result.id
-          }
-        })
-
-        // make the callback request
-        await axios.post(job.callback, {id: result.id, code, outputs: [url]})
-      })()
+      await axios.post(job.callback, {id: result.id, code, outputs: [url]}).catch()
       break;
+    case 'poll':
+      const pollElement = pollPool[result.id]
+      if(pollElement) {
+        pollElement.output = result
+        pollElement.code = code
+        pollElement.status = code == 200 ? 'success' : 'error'
+      }
+      return; // gets deleted from run and poll after timeout
   }
 
   delete runPool[result.id]
@@ -91,16 +113,17 @@ const handleSuccessForSubmission = function (result: RunResponse) {
 const getRunPoolElement = function (body: RunRequestBody, res: Response): RunPoolElement {
   switch (body.mode) {
     case 'sync':
-      return ({
-        mode: 'sync',
-        res
-      })
+    case 'poll':
+        return ({
+          mode: body.mode,
+          res,
+        })
     case 'callback':
       return ({
         mode: 'callback',
         res,
-        callback: body.callback
-      })
+        callback: body.callback,
+      })      
   }
 }
 
@@ -168,8 +191,8 @@ route.post('/', (req, res, next) => {
       stdin: req.body.stdin
     }, req.body.enc)
 
-    let queued = queueJob(job)
-
+    queueJob(job)
+    
     // Put into pool and wait for judge-worker to respond
     runPool[submission.id] = getRunPoolElement(req.body, res)
 
@@ -179,11 +202,15 @@ route.post('/', (req, res, next) => {
       }
     }, config.RUN.TIMEOUT)
 
-    switch (req.body.mode) {
-      case 'callback':
-        res.json({
-          id: submission.id
-        })
+    if(req.body.mode === 'poll'){
+      // Save in poll pool until timeout
+      pollPool[submission.id] = <PollPoolElement> {
+       status: 'running',
+       code: 202,                       
+      }
+      res.status(200).json({
+        id: submission.id
+      })
     }
 
   }).catch(err => {
@@ -193,6 +220,34 @@ route.post('/', (req, res, next) => {
       error: err
     })
   })
+})
+
+route.get('/:jobid', (req: Request, res: Response) => {
+  const jobid = req.params.jobid
+  const result = pollPool[jobid]
+  try {
+    if(result) {
+      return res.status(result.code).json(JSON.stringify(result)) } 
+    else {
+      (async () => {
+        const submission: SubmissionAttributes = await Submissions.findOne({
+          where: {
+            id: jobid
+            }
+          })
+        if(submission){
+          const url = submission.outputs;
+          // Fetch from S3 bucket
+        }
+      })
+    } 
+  } catch (error) {
+    res.status(501).json({
+      code: 501,
+      message: "Could not fetch result",
+      error: error,
+    })
+  }
 })
 
 /**
