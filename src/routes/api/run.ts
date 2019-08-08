@@ -227,7 +227,7 @@ route.get('/:jobid', (req: Request, res: Response) => {
   const result = pollPool[jobid]
   try {
     if(result) {
-      return res.status(result.code).json(JSON.stringify(result)) } 
+      return res.status(200).json(JSON.stringify(result)) } 
     else {
       (async () => {
         const submission: SubmissionAttributes = await Submissions.findOne({
@@ -239,7 +239,7 @@ route.get('/:jobid', (req: Request, res: Response) => {
           const url = submission.outputs;
           // Fetch from S3 bucket
         }
-      })
+      })()
     } 
   } catch (error) {
     res.status(501).json({
