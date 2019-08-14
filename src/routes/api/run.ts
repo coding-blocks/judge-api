@@ -4,7 +4,7 @@ import axios from 'axios'
 import {SubmissionAttributes, Submissions, db} from '../../db/models'
 import {RunJob, queueJob, successListener} from '../../rabbitmq/jobqueue'
 import {isInvalidRunRequest} from '../../validators/SubmissionValidators'
-import {upload} from '../../utils/s3'
+import {upload, download} from '../../utils/s3'
 import {normalizeRunJob} from '../../utils'
 import config = require('../../../config')
 
@@ -238,6 +238,8 @@ route.get('/:jobid', (req: Request, res: Response) => {
         if(submission){
           const url = submission.outputs;
           // Fetch from S3 bucket
+          const result = await download(url[0])
+          return res.status(200).json(JSON.stringify(result))
         }
       })()
     } 
