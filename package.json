@@ -28,7 +28,7 @@
     "@types/minio": "^7.0.1",
     "@types/mocha": "^5.0.0",
     "@types/request": "^2.0.8",
-    "@types/sequelize": "^4.0.79",
+    "@types/sequelize": "^4.28.7",
     "chai": "^4.1.2",
     "mkdirp": "^0.5.1",
     "mocha": "^5.0.0",
