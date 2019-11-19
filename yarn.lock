@@ -156,10 +156,10 @@
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-2.0.0.tgz#5a7306e367c539b9f6543499de8dd519fac37a8b"
 
-"@types/minio@^7.0.1":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@types/minio/-/minio-7.0.1.tgz#98e6348c747eb618c88412f6f297dd82f9801e9a"
-  integrity sha512-PnhsyzE7/n3Ag7pgExXB2eoTaeh8cUmNylEa++2xm/t/vUaOueGWkCq1HRCUWUxeQlFQvBADmpgASrSyEooSQQ==
+"@types/minio@^7.0.4":
+  version "7.0.4"
+  resolved "https://registry.yarnpkg.com/@types/minio/-/minio-7.0.4.tgz#51855b5900460d81f221b8bb70ef360287294fe5"
+  integrity sha512-7Y+MhksS1qNU5I1pxsdgLEhfJDp69CeR4a7PutU2O1e19AIbybdy8xGBRhwOASXgWq2vniWHvInObnJcmt8tMw==
   dependencies:
     "@types/node" "*"
 
