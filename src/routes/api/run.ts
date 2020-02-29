@@ -50,6 +50,8 @@ const handleTimeoutForSubmission = function (submissionId: number) {
     case 'callback':
       axios.post(job.callback, errorResponse)
   }
+
+  delete runPool[submissionId]
 }
 
 const handleSuccessForSubmission = function (result: RunResponse) {
@@ -79,6 +81,8 @@ const handleSuccessForSubmission = function (result: RunResponse) {
       })()
       break;
   }
+
+  delete runPool[result.id]
 }
 
 /**
@@ -109,7 +113,7 @@ const getRunPoolElement = function (body: RunRequestBody, res: Response): RunPoo
  *
  * @apiParam {String(Base64)} source source code to run (encoded in base64)
  * @apiParam {Enum} lang Language of code to execute
- * @apiParam {String(Base64)} input [Optional] stdin input for the program (encoded in base64)
+ * @apiParam {String(Base64)} stdin [Optional] stdin input for the program (encoded in base64)
  * @apiParam {Enum} mode [Optional] mode for request. Default = `sync`, see: https://github.com/coding-blocks/judge-api/issues/16
  * @apiParam {String)} callback [Optional] callback url for request. Required for `mode = callback`
  * @apiParam {String)} enc [Optional] Encoding type for stdin and source. Can be `url`|`base64`. Default = 'base64' 
@@ -172,7 +176,6 @@ route.post('/', (req, res, next) => {
     setTimeout(() => {
       if (runPool[submission.id]) {
         handleTimeoutForSubmission(submission.id)
-        delete runPool[submission.id]
       }
     }, config.RUN.TIMEOUT)
 
@@ -198,7 +201,6 @@ route.post('/', (req, res, next) => {
 successListener.on('success', (result: RunResponse) => {
   if (runPool[result.id]) {
     handleSuccessForSubmission(result)
-    delete runPool[result.id]
   }
   Submissions.update(<any>{
     end_time: new Date()

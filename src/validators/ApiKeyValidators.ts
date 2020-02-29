@@ -4,7 +4,8 @@ import {ApiKeyAttrs, ApiKeys} from '../db/models'
 
 export function checkValidApiKey (req: Request): Promise<boolean> {
   return new Promise((resolve, reject) => {
-    let apiKey = req.header('Authorization').split('Bearer ')[1]
+    let apiKey = req.header('Authorization')
+    apiKey = apiKey && apiKey.split('Bearer ')[1]
     if (!apiKey) {
       reject(new Error('No API Key in request'))
     }
