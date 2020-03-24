@@ -1,6 +1,6 @@
 {
   "name": "judge-api",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Judge API",
   "main": "dist/server.js",
   "repository": "https://github.com/coding-blocks/judge-api",
@@ -11,7 +11,7 @@
     "@types/amqplib": "^0.5.4",
     "amqplib": "^0.5.2",
     "apidoc": "^0.17.6",
-    "axios": "^0.18.0",
+    "axios": "^0.19.2",
     "base-64": "^0.1.0",
     "debug": "^4.0.0",
     "express": "^4.16.2",
@@ -19,7 +19,7 @@
     "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.22.6",
-    "uuid": "^3.3.2"
+    "uuid": "^7.0.1"
   },
   "devDependencies": {
     "@types/chai": "^4.0.4",
@@ -35,8 +35,8 @@
     "nyc": "^12.0.1",
     "request": "^2.83.0",
     "rimraf": "^2.6.2",
-    "ts-node": "^7.0.0",
-    "typescript": "^2.6.1"
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.3"
   },
   "scripts": {
     "prebuild": "mkdirp dist && rimraf dist/*",

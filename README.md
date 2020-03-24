@@ -44,3 +44,11 @@ We need a PostgreSQL database to run. Please configure the following env variabl
     DB_HOST='localhost'
 ```
 ### Queue (RabbitMQ)
+
+```
+brew install rabbitmq
+brew services start rabbitmq
+rabbitmqctl add_user codingblocks codingblocks
+rabbitmqctl set_user_tags codingblocks administrator
+rabbitmqctl set_permissions -p / codingblocks conf write read
+```
