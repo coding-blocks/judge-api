@@ -31,6 +31,7 @@ exports = module.exports = {
     ssl: process.env.S3_SSL || false,
     accessKey: process.env.S3_ACCESS_KEY || '',
     secretKey: process.env.S3_SECRET_KEY || '',
-    bucket: process.env.S3_BUCKET || 'judge-submissions'
+    bucket: process.env.S3_BUCKET || 'judge-submissions',
+    region: process.env.S3_REGION || 'us-east-1'
   }
 }

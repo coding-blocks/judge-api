@@ -9,6 +9,7 @@ const client = new Minio.Client({
   useSSL: !!config.S3.ssl,
   accessKey: config.S3.accessKey,
   secretKey: config.S3.secretKey,
+  region: config.S3.region
 })
 
 export type savedFile = {
