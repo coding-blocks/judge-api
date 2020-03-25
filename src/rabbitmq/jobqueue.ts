@@ -17,7 +17,8 @@ export interface RunJob {
   id: number
   source: string,
   lang: string,
-  stdin: string
+  stdin: string,
+  timelimit: number
 }
 
 export type JudgeJob = RunJob | SubmissionJob

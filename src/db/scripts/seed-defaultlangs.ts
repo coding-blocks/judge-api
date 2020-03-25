@@ -5,9 +5,11 @@ db.sync()
   .then(async () => {console.log('Languages Synced')})
   .then(() =>
     Langs.bulkCreate(<LangsAttributes[]>[
-      { lang_slug: 'py2', lang_name: 'Python', lang_version: '2.7' },
+      { lang_slug: 'py2', lang_name: 'Python 2', lang_version: '2.7' },
+      { lang_slug: 'py3', lang_name: 'Python 3', lang_version: '3.6' },
       { lang_slug: 'java8', lang_name: 'Java', lang_version: '1.8' },
-      { lang_slug: 'nodejs6', lang_name: 'NodeJS', lang_version: '6' },
+      { lang_slug: 'nodejs8', lang_name: 'NodeJS 8', lang_version: '8' },
+      { lang_slug: 'nodejs10', lang_name: 'NodeJS 10', lang_version: '10' },
       { lang_slug: 'cpp', lang_name: 'C++', lang_version: '11' },
       { lang_slug: 'c', lang_name: 'C', lang_version: '6' }
     ]))

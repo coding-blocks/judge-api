@@ -15,6 +15,7 @@ export type RunRequestBody = {
   lang: string,
   stdin: string,
   mode: string,
+  timlimit?: number,
   callback?: string
 }
 export interface RunRequest extends Request {
@@ -161,7 +162,8 @@ route.post('/', (req, res, next) => {
       id: submission.id,
       source: req.body.source,
       lang: req.body.lang,
-      stdin: req.body.stdin
+      stdin: req.body.stdin,
+      timelimit: +req.body.timelimit || 5
     }, req.body.enc)
 
     let queued = queueJob(job)
