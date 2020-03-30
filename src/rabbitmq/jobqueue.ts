@@ -22,10 +22,10 @@ export interface RunJob {
 
 export type JudgeJob = RunJob | SubmissionJob
 
-let jobQ = 'job_queue'
-let successQ = 'success_queue'
+const jobQ = 'job_queue'
+const successQ = 'success_queue'
 let jobChannel: Channel
-let successListener = new EventEmitter()
+const successListener = new EventEmitter()
 
 /**
  * Connect to RabbitMQ and save channel to
