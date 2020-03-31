@@ -19,7 +19,7 @@
     "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.22.6",
-    "uuid": "^7.0.1"
+    "uuid": "^7.0.3"
   },
   "devDependencies": {
     "@types/chai": "^4.0.4",
