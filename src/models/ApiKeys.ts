@@ -1,6 +1,6 @@
 import Sequelize from "sequelize";
 
-export type ApiKeyAttrs  = {
+export type ApiKeyAttrs = {
   id: number,
   key: string,
   whitelist_domains: string[] | undefined
@@ -32,9 +32,4 @@ export const define = (
   })
 }
 
-export const associate = ({ langs, submissions }) => {
-  submissions.belongsTo(langs, {
-    foreignKey: 'lang',
-    otherKey: 'lang_slug'
-  })
-};
+export const associate = () => { }

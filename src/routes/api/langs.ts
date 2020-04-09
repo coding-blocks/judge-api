@@ -1,4 +1,4 @@
-import {Router} from 'express'
+import { Router } from 'express'
 import DB from 'models'
 
 const route: Router = Router()
@@ -13,10 +13,10 @@ const route: Router = Router()
  *
  */
 route.get('/', (req, res, next) => {
-  Langs.findAll()
+  DB.langs.findAll()
     .then((langs) => {
       res.status(200).json(langs)
     })
 })
 
-export {route}
+export { route }

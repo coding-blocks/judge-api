@@ -1,10 +1,9 @@
 import * as request from 'request'
-import {expect} from 'chai'
+import { expect } from 'chai'
 import app from '../src/server'
-import {RunRequestBody, RunResponse} from '../src/routes/api/run'
 import * as debug from 'debug'
 import config = require('../config')
-import {CoreOptions} from 'request'
+import { CoreOptions } from 'request'
 
 
 const log = debug('test:judgeapi:runs')
@@ -30,7 +29,7 @@ describe('/api/runs', () => {
       {
         baseUrl: reqOptions.baseUrl,
         headers: reqOptions.headers,
-        json: <RunRequestBody> {
+        json: {
           source: (new Buffer(JSON.stringify(source)).toString('base64')),
           lang: 'cpp',
           stdin: (new Buffer(stdin).toString('base64'))
@@ -55,7 +54,7 @@ describe('/api/runs', () => {
       {
         baseUrl: reqOptions.baseUrl,
         headers: reqOptions.headers,
-        json: <RunRequestBody> {
+        json: {
           source: (new Buffer(JSON.stringify(source)).toString('base64')),
           lang: 'cpp',
           stdin: (new Buffer(stdin).toString('base64'))
@@ -80,7 +79,7 @@ describe('/api/runs', () => {
       {
         baseUrl: reqOptions.baseUrl,
         headers: reqOptions.headers,
-        json: <RunRequestBody> {
+        json: {
           source: (new Buffer(JSON.stringify(source)).toString('base64')),
           lang: 'cpp',
           stdin: (new Buffer(stdin).toString('base64'))

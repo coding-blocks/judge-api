@@ -8,14 +8,14 @@ export type Testcase = {
 }
 
 export type SubmissionAttributes = {
-  id?: number
+  id: number
   lang: string
   start_time: Date
-  end_time?: Date
+  end_time: Date
   mode: string
-  results?: Array<Testcase>
-  outputs?: Array<string>
-  callback?: string
+  results: Array<Testcase>
+  outputs: Array<string>
+  callback: string
 }
 
 export type SubmissionInstance = Sequelize.Instance<SubmissionAttributes> & SubmissionAttributes
@@ -30,7 +30,8 @@ export const define = (
       primaryKey: true
     },
     lang: {
-      type: Sequelize.STRING(10)
+      type: Sequelize.STRING(10),
+      allowNull: false
     },
     start_time: Sequelize.DATE,
     end_time: Sequelize.DATE,
@@ -42,14 +43,9 @@ export const define = (
     outputs: Sequelize.ARRAY(Sequelize.STRING),
     callback: Sequelize.STRING
   }, {
-    paranoid: true, // We do not want to lose any submission data
-    timestamps: false // Start and end times are already logged
-  })
+      paranoid: true, // We do not want to lose any submission data
+      timestamps: false // Start and end times are already logged
+    })
 }
 
-export const associate = ({ langs, submissions }) => {
-  submissions.belongsTo(langs, {
-    foreignKey: 'lang',
-    otherKey: 'lang_slug'
-  })
-};
+export const associate = () => { }

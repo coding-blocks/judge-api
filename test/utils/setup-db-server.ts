@@ -1,7 +1,7 @@
 import * as http from 'http'
 import app from '../../src/server'
-import {Server} from 'http'
-import {db} from '../../src/db/models'
+import { Server } from 'http'
+import DB from '../../src/models'
 import * as debug from 'debug'
 import config = require('../../config')
 
@@ -9,7 +9,7 @@ let server: Server
 const log = debug('test:judge:api')
 
 before((done) => {
-  db.sync()
+  DB.sequelize.sync()
     .then(() => {
       log('DB Synced')
       server = http.createServer(app)
@@ -21,6 +21,6 @@ before((done) => {
 })
 
 after((done) => {
-  db.close()
+  DB.sequelize.close()
   server.close(done)
 })

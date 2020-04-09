@@ -1,8 +1,8 @@
-import {NextFunction, Request, Response, Router} from 'express'
+import { NextFunction, Request, Response, Router } from 'express'
 import run from './run'
-import {route as submissions} from './submissions'
-import {route as langs} from './langs'
-import {checkValidApiKey} from '../../validators/ApiKeyValidators'
+import submit from './submit'
+import { route as langs } from './langs'
+import { checkValidApiKey } from '../../validators/ApiKeyValidators'
 import * as debug from 'debug'
 
 const log = debug('judge:api')
@@ -26,7 +26,7 @@ route.use((req: Request, res: Response, next: NextFunction) => {
 })
 
 route.use('/runs', run)
-route.use('/submissions', submissions)
+route.use('/submissions', submit)
 route.use('/langs', langs)
 
 export default route

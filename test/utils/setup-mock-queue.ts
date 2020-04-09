@@ -1,6 +1,5 @@
-import {RunResponse} from '../../src/routes/api/run'
 import * as amqp from 'amqplib/callback_api'
-import {Channel, Connection} from 'amqplib/callback_api'
+import { Channel, Connection } from 'amqplib/callback_api'
 import app from '../../src/server'
 import * as debug from 'debug'
 import config = require('../../config')
@@ -26,7 +25,7 @@ before((done) => {
           let stdin = (new Buffer(job.stdin, 'base64')).toString()
 
           setTimeout(() => {
-            channel.sendToQueue(successQ, (new Buffer(JSON.stringify(<RunResponse>{
+            channel.sendToQueue(successQ, (new Buffer(JSON.stringify({
               id: job.id,
               stderr: config.STDERR ? stdin : undefined,
               stdout: config.STDOUT ? stdin : undefined

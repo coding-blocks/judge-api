@@ -1,25 +1,29 @@
 import { Request, Response } from 'express'
-import { RunJob, queueJob } from 'rabbitmq/jobqueue'
+import { SubmissionJob, queueJob } from 'rabbitmq/jobqueue'
 import DB from 'models'
-import { normalizeRunJob } from 'utils'
-import { upload } from 'utils/s3'
 import axios from 'axios'
 
-type RunResponse = {
+type Testcase = {
   id: number,
-  stdout: string,
-  stderr: string,
-  time: number,
-  code: number
+  score: number,
+  time: string,
+  result: string
 }
+
+type SubmitResponse = {
+  id: number,
+  stderr: string,
+  testcases: Array<Testcase>
+}
+
 type RunPoolElement = {
   res: Response
 }
 
 const RunPool: { [x: number]: RunPoolElement } = {}
 
-class RunController {
-  async RunPOST(req: Request, res: Response) {
+class SubmitController {
+  async SubmitPOST(req: Request, res: Response) {
     const mode = req.body.mode || 'sync'
     const job = await DB.submissions.create({
       lang: req.body.lang,
@@ -28,15 +32,12 @@ class RunController {
       callback: req.body.callback
     })
 
-    const runJob: RunJob = await normalizeRunJob({
-      id: job.id,
+    await queueJob(<SubmissionJob>{
       source: req.body.source,
       lang: req.body.lang,
-      stdin: req.body.stdin,
-      timelimit: req.body.timelimit
-    }, req.body.enc)
-
-    await queueJob(runJob)
+      timelimit: req.body.timelimit,
+      testcases: req.body.testcases
+    })
 
     if (['callback', 'poll'].includes(mode)) {
       return res.json({
@@ -50,11 +51,9 @@ class RunController {
     }
   }
 
-  async onSuccess(result: RunResponse) {
-    const { url } = await upload(result)
-
+  async onSuccess(result: SubmitResponse) {
     const job = await DB.submissions.findById(result.id)
-    job.outputs = [url]
+    job.results = result.testcases
     await job.save()
 
     switch (job.mode) {
@@ -68,4 +67,4 @@ class RunController {
   }
 }
 
-export default new RunController()
+export default new SubmitController()
