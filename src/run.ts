@@ -1,11 +1,11 @@
 import app from './server'
 import config = require('../config')
 import * as debug from 'debug'
-import {db} from './db/models'
+import DB from 'models'
 
 const log = debug('judge:api')
 
-db.sync({})
+DB.sequelize.sync({})
   .then(() => {
     log('Database Synced')
     app.listen(config.PORT, () => {

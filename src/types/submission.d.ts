@@ -1,4 +1,4 @@
-import { Testcase } from "./result";
+import { TestcaseResult } from "./result";
 
 export type SubmissionAttributes = {
   id: number,
@@ -7,6 +7,6 @@ export type SubmissionAttributes = {
   end_time?: Date,
   mode: string,
   callbackURL?: string,
-  results?: Array<Testcase>
+  results?: Array<TestcaseResult>
   outputs?: Array<string>
 }

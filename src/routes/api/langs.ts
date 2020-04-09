@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import {Langs} from '../../db/models'
+import DB from 'models'
 
 const route: Router = Router()
 

@@ -1,5 +1,5 @@
 import {NextFunction, Request, Response, Router} from 'express'
-import {route as run} from './run'
+import run from './run'
 import {route as submissions} from './submissions'
 import {route as langs} from './langs'
 import {checkValidApiKey} from '../../validators/ApiKeyValidators'

@@ -1,5 +1,5 @@
 import {Request} from 'express'
-import {ApiKeyAttrs, ApiKeys} from '../db/models'
+import DB from 'models'
 
 
 export function checkValidApiKey (req: Request): Promise<boolean> {
@@ -10,11 +10,11 @@ export function checkValidApiKey (req: Request): Promise<boolean> {
       reject(new Error('No API Key in request'))
     }
 
-    ApiKeys.findOne({
+    DB.apikeys.findOne({
       where: {
         key: apiKey
       }
-    }).then((apiKey: ApiKeyAttrs) => {
+    }).then((apiKey) => {
       if (apiKey.whitelist_domains && apiKey.whitelist_domains.length > 0) {
         if (apiKey.whitelist_domains[0] === '*') {
           return resolve()

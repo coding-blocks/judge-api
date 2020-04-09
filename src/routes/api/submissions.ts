@@ -1,5 +1,5 @@
 import {Request, Router} from 'express'
-import {SubmissionAttributes, Submissions} from '../../db/models'
+import {SubmissionAttributes, Submissions} from '../../scripts/models'
 import {queueJob, SubmissionJob} from '../../rabbitmq/jobqueue'
 
 const route: Router = Router()
