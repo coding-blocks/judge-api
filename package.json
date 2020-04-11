@@ -41,7 +41,7 @@
     "build": "tsc",
     "apidoc": "apidoc -i src -o docs",
     "prestart": "npm run build && npm run apidoc",
-    "start": "scripts/wait-for-it.sh ${AMQP_HOST}:${AMQP_PORT} -- node dist/run.js",
+    "start": "NODE_PATH=dist scripts/wait-for-it.sh ${AMQP_HOST}:${AMQP_PORT} -- node dist/run.js",
     "test": "NODE_PATH=src node_modules/.bin/mocha --timeout 12000 --exit --require ts-node/register test/utils/setup*.ts test/*.ts",
     "cover": "nyc npm test",
     "seedlangs": "node dist/scripts/seed-defaultlangs.js",
