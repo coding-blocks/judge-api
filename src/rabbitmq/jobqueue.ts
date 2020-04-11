@@ -48,7 +48,7 @@ amqp.connect(`amqp://${config.AMQP.USER}:${config.AMQP.PASS}@${config.AMQP.HOST}
       jobChannel.consume(successQ, (msg) => {
         debug(`SUCCESS:CONSUME: msg.content = ${msg.content.toString()}`)
 
-        const payload = JSON.parse(msg.content.toString())
+        const payload = JSON.parse(msg.content.toString())        
         const eventName = payload.testcases ? 'submit_result' : 'run_result'
 
         successListener.emit(eventName, payload)

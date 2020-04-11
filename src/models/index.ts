@@ -22,7 +22,7 @@ const sequelize = new Sequelize(config.DB.DATABASE, config.DB.USERNAME, config.D
 fs
   .readdirSync(__dirname)
   .filter(function(file) {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (['.ts'].includes(file.slice(-3)));
+    return (file.indexOf('.') !== 0) && (file !== basename) && (['.js', '.ts'].includes(file.slice(-3)));
   })
   .forEach(function(file) {
     var model = require(path.join(__dirname, file)).define(sequelize);

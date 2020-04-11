@@ -11,8 +11,8 @@ exports = module.exports = {
   // Database config for a postgresql db (docker based or native)
   DB: {
     DATABASE: process.env.DB_NAME || 'judgeapi',
-    USERNAME: process.env.DB_USER|| 'judgeapi',
-    PASSWORD: process.env.DB_PASS|| 'judgeapi',
+    USERNAME: process.env.DB_USER || 'judgeapi',
+    PASSWORD: process.env.DB_PASS || 'judgeapi',
     HOST: process.env.DB_HOST || 'localhost'
   },
 

@@ -33,6 +33,7 @@ class SubmitController {
     })
 
     await queueJob(<SubmissionJob>{
+      id: job.id,
       source: req.body.source,
       lang: req.body.lang,
       timelimit: req.body.timelimit,
@@ -51,7 +52,7 @@ class SubmitController {
     }
   }
 
-  async onSuccess(result: SubmitResponse) {
+  async onSuccess(result: SubmitResponse) {    
     const job = await DB.submissions.findById(result.id)
     job.results = result.testcases
     await job.save()

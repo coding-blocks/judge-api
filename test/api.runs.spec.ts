@@ -18,79 +18,33 @@ const reqOptions: CoreOptions = {
 describe('/api/runs', () => {
 
   it('POST stdout with correct submission', (done) => {
-    let source = {
-      TIME_TAKEN: 2,
-      STDERR: false,
-      STDOUT: true
-    }
-    let stdin = 'OUR STDOUT DATA'
+    const source = `
+      #include <iostream>
+      using namespace std;
+      int main () {
+          char in[20];
+          cin>>in;
+          cout<<in;
+          return 0;
+      }`
+
+    let stdin = 'OURSTDOUTDATA'
 
     request.post(`api/runs`,
       {
         baseUrl: reqOptions.baseUrl,
         headers: reqOptions.headers,
         json: {
-          source: (new Buffer(JSON.stringify(source)).toString('base64')),
+          source: (new Buffer(source).toString('base64')),
           lang: 'cpp',
           stdin: (new Buffer(stdin).toString('base64'))
         }
       },
       (err, resp, body) => {
         log(body)
-        expect(body.stdout).to.eq(stdin)
+        expect(new Buffer(body.stdout, 'base64').toString()).to.eq(stdin)
         done()
       })
   })
-
-  it('POST stderr with incorrect submission', (done) => {
-    let source = {
-      TIME_TAKEN: 2,
-      STDERR: true,
-      STDOUT: false
-    }
-    let stdin = 'OUR STDOUT DATA'
-
-    request.post(`api/runs`,
-      {
-        baseUrl: reqOptions.baseUrl,
-        headers: reqOptions.headers,
-        json: {
-          source: (new Buffer(JSON.stringify(source)).toString('base64')),
-          lang: 'cpp',
-          stdin: (new Buffer(stdin).toString('base64'))
-        }
-      },
-      (err, resp, body) => {
-        log(body)
-        expect(body.stderr).to.eq(stdin)
-        done()
-      })
-  })
-
-  it('POST timeout with > 10s submission', (done) => {
-    let source = {
-      TIME_TAKEN: 11,
-      STDERR: true,
-      STDOUT: false
-    }
-    let stdin = 'OUR STDOUT DATA'
-
-    request.post(`api/runs`,
-      {
-        baseUrl: reqOptions.baseUrl,
-        headers: reqOptions.headers,
-        json: {
-          source: (new Buffer(JSON.stringify(source)).toString('base64')),
-          lang: 'cpp',
-          stdin: (new Buffer(stdin).toString('base64'))
-        }
-      },
-      (err, resp, body) => {
-        log(body)
-        expect(body.code).to.eq(408)
-        done()
-      })
-  })
-
 })
 
