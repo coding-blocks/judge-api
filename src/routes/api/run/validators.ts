@@ -1,28 +1,35 @@
-import { Request, Response, NextFunction } from 'express'
+import { Handler } from 'express'
+import BaseValidator from 'validators/baseValidator'
+import * as Joi from '@hapi/joi'
 
-class RunValidator {
-  POST(req: Request, res: Response, next: NextFunction) {
-    if (!req.body.lang || (typeof req.body.lang !== 'string')) {
-      return new Error('Invalid Language')
-    }
-    if (!req.body.source) {
-      return new Error('Source not found')
-    }
-    if (!req.body.stdin) {
-      req.body.stdin = ''
-    }
-    if (!req.body.mode) {
-      req.body.mode = 'sync'
-    }
-    if (!['sync', 'callback'].includes(req.body.mode)) {
-      return new Error('Mode must be one of sync, callback')
-    }
-    if (req.body.mode === 'callback' && !req.body.callback) {
-      return new Error('Must specify a callback for callback mode')
-    }
-  
-    return next()
+class RunValidator extends BaseValidator {
+  POST: Handler
+
+  constructor() {
+    super()
+    this.POST = this.requestValidator(this.POSTSchema)
   }
+
+  POSTSchema = Joi.object({
+    lang: Joi
+      .string()
+      .required(),
+    source: Joi
+      .string()
+      .required(),
+    mode: Joi
+      .string()
+      .valid('sync', 'callback', 'poll'),
+    stdin: Joi
+      .string()
+      .default(''),
+    timelimit: Joi
+      .number(),
+    callback: Joi
+      .string()
+      .uri()
+      .when('mode', { is: 'callback', then: Joi.string().required() })
+  })
 }
 
 export default new RunValidator()

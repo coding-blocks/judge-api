@@ -40,7 +40,6 @@ export const define = (
       allowNull: false
     },
     results: Sequelize.JSON,
-    outputs: Sequelize.ARRAY(Sequelize.STRING),
     callback: Sequelize.STRING
   }, {
       paranoid: true, // We do not want to lose any submission data

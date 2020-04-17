@@ -55,7 +55,7 @@ class SubmitController {
 
   async onSuccess(result: SubmitResponse) {    
     const job = await DB.submissions.findById(result.id)
-    job.results = result.testcases
+    job.results = result
     await job.save()
 
     switch (job.mode) {
