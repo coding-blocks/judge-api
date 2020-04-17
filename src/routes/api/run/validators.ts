@@ -28,7 +28,10 @@ class RunValidator extends BaseValidator {
     callback: Joi
       .string()
       .uri()
-      .when('mode', { is: 'callback', then: Joi.string().required() })
+      .when('mode', { is: 'callback', then: Joi.string().required() }),
+    enc: Joi
+      .string()
+      .valid('base64', 'url')
   })
 }
 
