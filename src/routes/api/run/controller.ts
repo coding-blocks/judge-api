@@ -52,11 +52,7 @@ class RunController {
   }
 
   async onSuccess(result: RunResponse) {
-    const { url } = await upload(result)
-
     const job = await DB.submissions.findById(result.id)
-    job.outputs = [url]
-    await job.save()
 
     switch (job.mode) {
       case 'callback':

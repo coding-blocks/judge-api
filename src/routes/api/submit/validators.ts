@@ -20,18 +20,23 @@ class RunValidator extends BaseValidator {
     mode: Joi
       .string()
       .valid('sync', 'callback', 'poll'),
-    stdin: Joi
-      .string()
-      .default(''),
     timelimit: Joi
       .number(),
     callback: Joi
       .string()
       .uri()
       .when('mode', { is: 'callback', then: Joi.string().required() }),
-    enc: Joi
-      .string()
-      .valid('base64', 'url')
+    testcases: Joi
+      .array()
+      .min(1)
+      .items(
+        Joi.object({
+          id: Joi.number().required(),
+          stdin: Joi.string().uri(),
+          stdout: Joi.string().uri()
+        })
+      )
+      .required()
   })
 }
 
