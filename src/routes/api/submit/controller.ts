@@ -37,7 +37,8 @@ class SubmitController {
       source: req.body.source,
       lang: req.body.lang,
       timelimit: req.body.timelimit,
-      testcases: req.body.testcases
+      testcases: req.body.testcases,
+      scenario: 'submit'
     })
 
     if (['callback', 'poll'].includes(mode)) {

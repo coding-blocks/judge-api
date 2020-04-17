@@ -9,6 +9,7 @@ export interface SubmissionJob {
   source: string,
   lang: string,
   timelimit: number,
+  scenario: string,
   testcases: [{
     id: number,
     stdin: string,
@@ -21,7 +22,8 @@ export interface RunJob {
   source: string,
   lang: string,
   stdin: string,
-  timelimit: number
+  timelimit: number,
+  scenario: string
 }
 
 export type JudgeJob = RunJob | SubmissionJob

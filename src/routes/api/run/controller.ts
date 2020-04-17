@@ -33,7 +33,8 @@ class RunController {
       source: req.body.source,
       lang: req.body.lang,
       stdin: req.body.stdin,
-      timelimit: req.body.timelimit
+      timelimit: req.body.timelimit,
+      scenario: 'run'
     }, req.body.enc)
 
     await queueJob(runJob)
