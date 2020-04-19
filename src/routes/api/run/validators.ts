@@ -22,7 +22,7 @@ class RunValidator extends BaseValidator {
       .valid('sync', 'callback', 'poll'),
     stdin: Joi
       .string()
-      .default(''),
+      .allow(''),
     timelimit: Joi
       .number(),
     callback: Joi

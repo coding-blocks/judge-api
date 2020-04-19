@@ -32,7 +32,7 @@ class RunController {
       id: job.id,
       source: req.body.source,
       lang: req.body.lang,
-      stdin: req.body.stdin,
+      stdin: req.body.stdin || '',
       timelimit: req.body.timelimit,
       scenario: 'run'
     }, req.body.enc)
