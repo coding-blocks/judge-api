@@ -18,8 +18,8 @@ type RunPoolElement = {
 
 const RunPool: { [x: number]: RunPoolElement } = {}
 
-class RunController {
-  async RunPOST(req: Request, res: Response) {
+export default {
+  async runPOST(req: Request, res: Response) {
     const mode = req.body.mode || 'sync'
     const job = await DB.submissions.create({
       lang: req.body.lang,
@@ -49,7 +49,7 @@ class RunController {
     RunPool[job.id] = {
       res
     }
-  }
+  },
 
   async onSuccess(result: RunResponse) {
     const job = await DB.submissions.findById(result.id)
@@ -64,5 +64,3 @@ class RunController {
     }
   }
 }
-
-export default new RunController()

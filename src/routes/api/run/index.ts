@@ -5,7 +5,7 @@ import { successListener } from 'rabbitmq/jobqueue'
 
 const router: Router = Router()
 
-router.post('/', Validator.POST, Controller.RunPOST)
+router.post('/', Validator.POST, Controller.runPOST)
 successListener.on('run_result', Controller.onSuccess)
 
 export default router

@@ -22,8 +22,8 @@ type RunPoolElement = {
 
 const RunPool: { [x: number]: RunPoolElement } = {}
 
-class SubmitController {
-  async SubmitPOST(req: Request, res: Response) {
+export default {
+  async submitPOST(req: Request, res: Response) {
     const mode = req.body.mode || 'sync'
     const job = await DB.submissions.create({
       lang: req.body.lang,
@@ -51,7 +51,7 @@ class SubmitController {
     RunPool[job.id] = {
       res
     }
-  }
+  },
 
   async onSuccess(result: SubmitResponse) {    
     const job = await DB.submissions.findById(result.id)
@@ -68,5 +68,3 @@ class SubmitController {
     }
   }
 }
-
-export default new SubmitController()
