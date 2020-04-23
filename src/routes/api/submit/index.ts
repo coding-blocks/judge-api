@@ -4,8 +4,9 @@ import Validator from './validators'
 import { successListener } from 'rabbitmq/jobqueue'
 
 const router: Router = Router()
+const validator = new Validator()
 
-router.post('/', Validator.POST, Controller.submitPOST)
+router.post('/', validator.POST, Controller.submitPOST)
 successListener.on('submit_result', Controller.onSuccess)
 
 export default router
