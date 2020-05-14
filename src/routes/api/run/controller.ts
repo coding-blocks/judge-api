@@ -53,6 +53,8 @@ export default {
 
   async onSuccess(result: RunResponse) {
     const job = await DB.submissions.findById(result.id)
+    job.results = result
+    await job.save()
 
     switch (job.mode) {
       case 'callback':
