@@ -45,5 +45,5 @@ export const download = async function (url: string, enc: string = 'base64') : P
   if (!url) return ''
    
   const {data} = await axios.get(url)
-  return Buffer.from(data).toString(enc)
+  return Buffer.from(data).toString(<any>enc)
 }

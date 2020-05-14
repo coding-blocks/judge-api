@@ -1,13 +1,14 @@
-FROM node:8-alpine
+FROM node:10-alpine
 
 WORKDIR /usr/src/judge-api
+RUN apk add --no-cache yarn
 
 COPY package.json .
-RUN npm install -D
+RUN yarn
 
 COPY . .
 
-RUN npm run build
+RUN yarn build
 
 EXPOSE 3737
 
