@@ -20,7 +20,7 @@ export default class BaseValidator {
 
   requestValidator(schema, key = 'body') {
     return (req: Request, res: Response, next: NextFunction) => {
-      const { error } = schema.validate(req[key], { allowUnknown: true })
+      const { error } = schema.validate(req[key], { allowUnknown: false })
       if (error) {
         return this.forbid({message: error.details[0].message, code: 400}, res)
       }
