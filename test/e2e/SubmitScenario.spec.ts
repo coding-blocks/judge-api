@@ -24,13 +24,13 @@ const source = `
 const testcases = [
     {
         id: 1,
-        stdin: 'https://minio.cb.lk/public/input',
-        stdout: 'https://minio.cb.lk/public/input'
+        input: 'https://minio.cb.lk/public/input',
+        output: 'https://minio.cb.lk/public/input'
     },
     {
         id: 2,
-        stdin: 'https://minio.cb.lk/public/input',
-        stdout: 'https://minio.cb.lk/public/input'
+        input: 'https://minio.cb.lk/public/input',
+        output: 'https://minio.cb.lk/public/input'
     }
 ];
 const expectedResult = 'Success';
@@ -214,5 +214,23 @@ describe('POST api/submissions', () => {
         expect(res.body.id).to.exist;
         expect(res.status).to.equal(200);
         expect(resultFromCallBack.result).to.equal(expectedResult);
+    });
+
+    it('should throw 400 error for incorrect testcases ', async () => {
+        const params = {
+            source: (new Buffer(source).toString('base64')),
+            lang: 'cpp',
+            mode: 'poll',
+            timelimit: 1,
+            testcases: []
+        };
+
+        const res = await chai.request(app).post(`/api/submissions`).set({
+            Authorization: 'Bearer 7718330d2794406c980bdbded6c9dc1d',
+            Accept: 'application/json'
+        }).send(params);
+
+        expect(res.status).to.equal(400);
+        expect(res.body.err.message).to.equal('"testcases" must contain at least 1 items');
     });
 });

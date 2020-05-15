@@ -137,6 +137,23 @@ describe('RunValidator', async () => {
         expect(sentData.err.message).to.equal('"mode" must be one of [sync, callback, poll]');
     });
 
+    it('should throw error if mode is callback and callback is missing', async () => {
+        const req = {
+            body: {
+                source: 'LKJSDFKLMC414CcnBcba12',
+                lang: 'cpp',
+                mode: 'callback',
+                stdin: ''
+            }
+        };
+
+        await runValidator.POST(req, res, nextSpy);
+
+        expect(sentStatus).to.be.equal(400);
+        expect(sentData.err.message).to.equal('"callback" is required');
+        expect(nextSpy.calledOnce).to.be.false;
+    });
+
     it('should not throw an error with STDIN missing', async () => {
         const req = {
             body: {
@@ -200,24 +217,7 @@ describe('RunValidator', async () => {
         expect(nextSpy.calledOnce).to.be.false;
     });
 
-    it('should throw error if mode is callback and callback is missing', async () => {
-        const req = {
-            body: {
-                source: 'LKJSDFKLMC414CcnBcba12',
-                lang: 'cpp',
-                mode: 'callback',
-                stdin: ''
-            }
-        };
-
-        await runValidator.POST(req, res, nextSpy);
-
-        expect(sentStatus).to.be.equal(400);
-        expect(sentData.err.message).to.equal('"callback" is required');
-        expect(nextSpy.calledOnce).to.be.false;
-    });
-
-    it('shoud NOT throw error for correct values', async () => {
+    it('should NOT throw error for correct values', async () => {
         const req = {
             body: {
                 source: 'LKJSDFKLMC414CcnBcba12',
