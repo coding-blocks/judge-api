@@ -17,9 +17,12 @@ describe('GET api/langs', () => {
             {lang_slug: 'py3', lang_name: 'Python 3', lang_version: '3.6'},
             {lang_slug: 'java8', lang_name: 'Java', lang_version: '1.8'}
         ]);
-        await DB.apikeys.bulkCreate([
-            {id: 1, key: APIKEY, whitelist_domains: ['*'], whitelist_ips: ['*']}
-        ]);
+        await DB.apikeys.create({
+            id: 1,
+            key: APIKEY,
+            whitelist_domains: ['*'],
+            whitelist_ips: ['*']
+        });
     });
     after(utils.truncateTables);
 

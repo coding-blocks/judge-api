@@ -30,12 +30,17 @@ function delay(ms: number) {
 
 describe('POST api/runs', () => {
     before(async () => {
-        await DB.apikeys.bulkCreate([
-            {id: 1, key: APIKEY, whitelist_domains: ['*'], whitelist_ips: ['*']}
-        ]);
-        await DB.langs.bulkCreate([
-            {lang_slug: 'cpp', lang_name: 'C++', lang_version: '11'}
-        ]);
+        await DB.apikeys.create({
+            id: 1,
+            key: APIKEY,
+            whitelist_domains: ['*'],
+            whitelist_ips: ['*']
+        });
+        await DB.langs.create({
+            lang_slug: 'cpp',
+            lang_name: 'C++',
+            lang_version: '11'
+        });
         await utils.setupMockQueue()
     });
     after(utils.truncateTables);

@@ -12,9 +12,10 @@ const APIKEY = '7718330d2794406c980bdbded6c9dc1d';
 
 describe('API Key Validtors', async () => {
     beforeEach(async () => {
-        await DB.apikeys.bulkCreate([
-            {key: APIKEY, whitelist_domains: ['*'], whitelist_ips: ['*']}
-        ]);
+        await DB.apikeys.create({
+            key: APIKEY, whitelist_domains: ['*'],
+            whitelist_ips: ['*']
+        });
     });
     afterEach(utils.truncateTables);
 
@@ -86,9 +87,10 @@ describe('API Key Validtors', async () => {
     it('should NOT reject api with a whitelist domain', async () => {
         const currentKey = 'SDLKJFLSJDKCWEKRJC';
 
-        await DB.apikeys.bulkCreate([
-            {key: currentKey, whitelist_domains: ['Referer']}
-        ]);
+        await DB.apikeys.create({
+            key: currentKey,
+            whitelist_domains: ['Referer']
+        });
 
         // @ts-ignore
         const req: Request = {
