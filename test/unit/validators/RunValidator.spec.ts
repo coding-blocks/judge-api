@@ -91,7 +91,7 @@ describe('RunValidator', async () => {
         expect(nextSpy.calledOnce).to.be.false;
     });
 
-    it('should throw an error when mode is missing', async () => {
+    it('should NOT throw an error when mode is missing', async () => {
         const req = {
             body: {
                 source: 'LKJSDFKLMC414CcnBcba12',
@@ -101,10 +101,8 @@ describe('RunValidator', async () => {
         };
 
         await runValidator.POST(req, res, nextSpy);
-        // TODO
-        // does not throw error for mode missing
+
         expect(nextSpy.calledOnce).to.be.true;
-        // nextSpy is true === next() was called
     });
 
     it('should throw an error when mode is NOT string', async () => {
@@ -118,10 +116,8 @@ describe('RunValidator', async () => {
         };
 
         await runValidator.POST(req, res, nextSpy);
-        // TODO
+
         expect(nextSpy.calledOnce).to.be.false;
-        // error thrown == " mode" must be one of [sync, callback, poll]
-        // but should've been "mode" must be string
     });
 
     it('should throw an error when mode is not one of "callback, poll, sync"', async () => {
@@ -136,7 +132,7 @@ describe('RunValidator', async () => {
 
 
         await runValidator.POST(req, res, nextSpy);
-        // TODO
+
         expect(nextSpy.calledOnce).to.be.false;
         expect(sentData.err.message).to.equal('"mode" must be one of [sync, callback, poll]');
     });
@@ -193,17 +189,15 @@ describe('RunValidator', async () => {
                 lang: 'cpp',
                 mode: 'poll',
                 stdin: '',
-                timelimit: '123'
+                timelimit: 'abc'
             }
         };
 
         await runValidator.POST(req, res, nextSpy);
 
-        // TODO fix this. CODE is wrong
-        expect(nextSpy.calledOnce).to.be.true;
-        // expect(sentStatus).to.be.equal(400);
-        // expect(sentData.err.message).to.equal('"timelimit" must be an integer');
-        // expect(nextSpy.calledOnce).to.be.false;
+        expect(sentStatus).to.be.equal(400);
+        expect(sentData.err.message).to.equal('"timelimit" must be a number');
+        expect(nextSpy.calledOnce).to.be.false;
     });
 
     it('should throw error if mode is callback and callback is missing', async () => {

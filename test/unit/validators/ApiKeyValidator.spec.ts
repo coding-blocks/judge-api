@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as utils from '../../utils/utils';
 import {checkValidApiKey} from '../../../src/validators/ApiKeyValidators';
 import {Request} from 'express'
@@ -20,7 +21,6 @@ describe('API Key Validtors', async () => {
     afterEach(utils.truncateTables);
 
     it('should reject an invalid api', () => {
-        // @ts-ignore
         const req: Request = {
             header(name): any {
                 if (name === 'Authorization') {
@@ -33,7 +33,6 @@ describe('API Key Validtors', async () => {
     });
 
     it('should reject no api', () => {
-        // @ts-ignore
         const req: Request = {
             header(name): any {
             }
@@ -48,7 +47,6 @@ describe('API Key Validtors', async () => {
             {key: currentKey}
         ]);
 
-        // @ts-ignore
         const req: Request = {
             header(name): any {
                 if (name === 'Authorization') {
@@ -68,7 +66,6 @@ describe('API Key Validtors', async () => {
             {key: currentKey, whitelist_ips: [remoteAddress]}
         ]);
 
-        // @ts-ignore
         const req: Request = {
             header(name): any {
                 if (name === 'Authorization') {
@@ -76,7 +73,6 @@ describe('API Key Validtors', async () => {
                 }
             }
         };
-        // @ts-ignore
         req.connection = {
             remoteAddress
         };
@@ -92,7 +88,6 @@ describe('API Key Validtors', async () => {
             whitelist_domains: ['Referer']
         });
 
-        // @ts-ignore
         const req: Request = {
             header(name): any {
                 if (name === 'Authorization') {
@@ -106,7 +101,6 @@ describe('API Key Validtors', async () => {
     });
 
     it('should NOT reject api with whitelist ip/domain as "*"', async () => {
-        // @ts-ignore
         const req: Request = {
             header(name): any {
                 if (name === 'Authorization') {

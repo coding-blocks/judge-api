@@ -30,7 +30,6 @@ describe('GET api/langs', () => {
     it('should throw 403 error API key is absent in the request', async () => {
         const res = await chai.request(app).get(`/api/langs`);
         expect(res.status).to.equal(403);
-        // TODO this should be res.body.err maybe? (consistent with other error)
         expect(res.body.message).to.equal('No API Key in request');
     });
 
@@ -41,7 +40,6 @@ describe('GET api/langs', () => {
         });
         expect(res.status).to.equal(403);
         expect(res.body.message).to.equal('Invalid API Key');
-        // maybe 400 error?
     });
 
     it('should throw 404 error if POST request is made', async () => {

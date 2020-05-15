@@ -47,7 +47,6 @@ describe('POST api/runs', () => {
 
 
     it('should throw 403 error if API Key is absent', async () => {
-        // shouldn't this be bad request 400?
 
         const res = await chai.request(app).post(`/api/runs`);
 
