@@ -1,3 +1,4 @@
+// @ts-nocheck
 import RunValidator from '../../../src/routes/api/run/validators';
 
 const sinon = require('sinon');
@@ -32,9 +33,7 @@ describe('RunValidator', async () => {
                 stdin: 'INPUT'
             }
         };
-        const nextSpy = sinon.spy();
 
-        // @ts-ignore
         await runValidator.POST(req, res, nextSpy);
 
         expect(sentStatus).to.equal(400);
@@ -51,9 +50,7 @@ describe('RunValidator', async () => {
                 stdin: 'INPUT'
             }
         };
-        const nextSpy = sinon.spy();
 
-        // @ts-ignore
         await runValidator.POST(req, res, nextSpy);
         // TODO WRONG
         // expect(sentStatus).to.equal(400);
@@ -69,9 +66,7 @@ describe('RunValidator', async () => {
                 stdin: 'INPUT'
             }
         };
-        const nextSpy = sinon.spy();
 
-        // @ts-ignore
         await runValidator.POST(req, res, nextSpy);
 
         expect(sentStatus).to.equal(400);
@@ -88,9 +83,7 @@ describe('RunValidator', async () => {
                 stdin: 'INPUT'
             }
         };
-        const nextSpy = sinon.spy();
 
-        // @ts-ignore
         await runValidator.POST(req, res, nextSpy);
 
         expect(sentStatus).to.equal(400);
@@ -106,9 +99,7 @@ describe('RunValidator', async () => {
                 stdin: 'INPUT'
             }
         };
-        const nextSpy = sinon.spy();
 
-        // @ts-ignore
         await runValidator.POST(req, res, nextSpy);
         // TODO
         // does not throw error for mode missing
@@ -125,9 +116,7 @@ describe('RunValidator', async () => {
                 stdin: 'INPUT'
             }
         };
-        const nextSpy = sinon.spy();
 
-        // @ts-ignore
         await runValidator.POST(req, res, nextSpy);
         // TODO
         expect(nextSpy.calledOnce).to.be.false;
@@ -144,9 +133,8 @@ describe('RunValidator', async () => {
                 stdin: 'INPUT'
             }
         };
-        const nextSpy = sinon.spy();
 
-        // @ts-ignore
+
         await runValidator.POST(req, res, nextSpy);
         // TODO
         expect(nextSpy.calledOnce).to.be.false;
@@ -161,9 +149,8 @@ describe('RunValidator', async () => {
                 mode: 'poll'
             }
         };
-        const nextSpy = sinon.spy();
-        // @ts-ignore
         await runValidator.POST(req, res, nextSpy);
+
         expect(nextSpy.calledOnce).to.be.true;
     });
 
@@ -176,8 +163,7 @@ describe('RunValidator', async () => {
                 stdin: 123
             }
         };
-        const nextSpy = sinon.spy();
-        // @ts-ignore
+
         await runValidator.POST(req, res, nextSpy);
 
         expect(nextSpy.calledOnce).to.be.false;
@@ -195,7 +181,6 @@ describe('RunValidator', async () => {
             }
         };
 
-        // @ts-ignore
         await runValidator.POST(req, res, nextSpy);
 
         expect(nextSpy.calledOnce).to.be.true;
@@ -211,8 +196,7 @@ describe('RunValidator', async () => {
                 timelimit: '123'
             }
         };
-        const nextSpy = sinon.spy();
-        // @ts-ignore
+
         await runValidator.POST(req, res, nextSpy);
 
         // TODO fix this. CODE is wrong
@@ -231,9 +215,7 @@ describe('RunValidator', async () => {
                 stdin: ''
             }
         };
-        const nextSpy = sinon.spy();
 
-        // @ts-ignore
         await runValidator.POST(req, res, nextSpy);
 
         expect(sentStatus).to.be.equal(400);
@@ -250,9 +232,7 @@ describe('RunValidator', async () => {
                 stdin: 'something'
             }
         };
-        const nextSpy = sinon.spy();
 
-        // @ts-ignore
         await runValidator.POST(req, res, nextSpy);
 
         expect(nextSpy.calledOnce).to.be.true;
