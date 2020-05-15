@@ -13,6 +13,7 @@
     "amqplib": "^0.5.2",
     "apidoc": "^0.17.6",
     "base-64": "^0.1.0",
+    "cross-env": "^7.0.2",
     "chai-as-promised": "^7.1.1",
     "chai-http": "^4.3.0",
     "debug": "^4.0.0",
@@ -21,6 +22,7 @@
     "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.22.6",
+    "sinon": "^9.0.2",
     "uuid": "^7.0.1"
   },
   "devDependencies": {
@@ -45,8 +47,8 @@
     "build": "tsc",
     "apidoc": "apidoc -i src -o docs",
     "prestart": "npm run build && npm run apidoc",
-    "start": "NODE_PATH=dist scripts/wait-for-it.sh localhost:5672 -- node dist/run.js",
-    "test": "NODE_PATH=src node_modules/.bin/mocha --timeout 12000 --exit --require ts-node/register test/unit/validators/*.ts test/e2e/*.ts",
+    "start": "cross-env NODE_PATH=dist scripts/wait-for-it.sh localhost:5672 -- node dist/run.js",
+    "test": "cross-env NODE_PATH=src node_modules/.bin/mocha --timeout 12000 --exit --require ts-node/register test/unit/validators/*.ts test/e2e/*.ts",
     "cover": "nyc npm test",
     "seedlangs": "node dist/scripts/seed-defaultlangs.js",
     "precodecov": "npm run cover",
