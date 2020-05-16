@@ -3,7 +3,7 @@ import * as path from 'path'
 import * as fs from 'fs'
 import dbg = require('debug')
 
-const config = require('../../config/config');
+const config = require('../../config/index');
 const basename  = path.basename(module.filename);
 const db: any = {}
 const dbModel = {}
