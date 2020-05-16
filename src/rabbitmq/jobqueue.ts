@@ -2,7 +2,7 @@ import * as amqp from 'amqplib/callback_api'
 import { Channel, Connection } from 'amqplib/callback_api'
 import { EventEmitter } from 'events'
 const debug = require('debug')('judge:api:jobqueue')
-import config = require('../../config')
+const config = require('../../config/config')
 
 export interface SubmissionJob {
   id: number
