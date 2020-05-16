@@ -48,7 +48,7 @@
     "apidoc": "apidoc -i src -o docs",
     "prestart": "npm run build && npm run apidoc",
     "start": "cross-env NODE_PATH=dist scripts/wait-for-it.sh localhost:5672 -- node dist/run.js",
-    "test": "cross-env NODE_PATH=src NODE_ENV=test mocha --timeout 12000 --exit --require ts-node/register test/unit/validators/*.ts test/e2e/*.ts",
+    "test": "cross-env NODE_PATH=src NODE_ENV=test mocha --timeout 12000 --exit --require ts-node/register test/utils/setup*.ts test/unit/validators/*.ts test/e2e/*.ts",
     "cover": "nyc npm test",
     "seedlangs": "node dist/scripts/seed-defaultlangs.js",
     "precodecov": "npm run cover",
