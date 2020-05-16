@@ -1,9 +1,9 @@
 import * as Sequelize from 'sequelize'
 import * as path from 'path'
 import * as fs from 'fs'
-import config = require('../../config')
 import dbg = require('debug')
 
+const config = require('../../config/config');
 const basename  = path.basename(module.filename);
 const db: any = {}
 const dbModel = {}
