@@ -4,6 +4,7 @@ import submit from './submit'
 import { route as langs } from './langs'
 import { checkValidApiKey } from '../../validators/ApiKeyValidators'
 import * as debug from 'debug'
+import DB from '../../models';
 
 const log = debug('judge:api')
 
@@ -23,6 +24,15 @@ route.use((req: Request, res: Response, next: NextFunction) => {
       code: 403,
       message: err.message
     }))
+})
+
+route.use((req: Request, res: Response, next: NextFunction) => {
+    log('Loading All Languages')
+    DB.langs.findAll()
+        .then((langs) => {
+            res.locals.langs = langs
+            next()
+        })
 })
 
 route.use('/runs', run)

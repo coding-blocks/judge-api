@@ -13,10 +13,8 @@ const route: Router = Router()
  *
  */
 route.get('/', (req, res, next) => {
-  DB.langs.findAll()
-    .then((langs) => {
-      res.status(200).json(langs)
-    })
+  const langs = res.locals.langs;
+  res.status(200).json(langs);
 })
 
 export { route }
