@@ -53,22 +53,6 @@ describe('SubmitValidator', async () => {
         expect(nextSpy.calledOnce).to.be.false;
     });
 
-    it('should throw an error with incorrect language', async () => {
-        const req = {
-            body: {
-                source: 'LKJSDFKLMC414CcnBcba12',
-                lang: 'wrongLang',
-                mode: 'sync',
-                testcases
-            }
-        };
-
-        await submitValidator.POST(req, res, nextSpy);
-
-        expect(sentStatus).to.equal(400);
-        expect(nextSpy.calledOnce).to.be.false;
-    });
-
     it('should throw an error when source is missing', async () => {
         const req = {
             body: {
