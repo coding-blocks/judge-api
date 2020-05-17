@@ -64,10 +64,9 @@ describe('SubmitValidator', async () => {
         };
 
         await submitValidator.POST(req, res, nextSpy);
-        // TODO WRONG
-        // expect(sentStatus).to.equal(400);
-        // expect(sentData.err.message).to.equal('"lang" is required');
-        // expect(nextSpy.calledOnce).to.be.false;
+
+        expect(sentStatus).to.equal(400);
+        expect(nextSpy.calledOnce).to.be.false;
     });
 
     it('should throw an error when source is missing', async () => {

@@ -85,8 +85,7 @@ describe('POST api/runs', () => {
             Accept: 'application/json'
         }).send(params);
 
-        expect(res.status).to.equal(200);
-        // TODO ? does not throw error.
+        expect(res.status).to.equal(400);
     });
 
     it('should throw 400 error when source is missing', async () => {

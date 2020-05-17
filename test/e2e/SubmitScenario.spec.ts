@@ -98,9 +98,7 @@ describe('POST api/submissions', () => {
             Accept: 'application/json'
         }).send(params);
 
-        // TODO WRONG, didn't throw error
-        expect(res.body.result).to.equal(expectedResult);
-        expect(res.status).to.equal(200);
+        expect(res.status).to.equal(400);
     });
 
     it('should throw error for source missing', async () => {

@@ -82,22 +82,25 @@ describe('API Key Validtors', async () => {
 
     it('should NOT reject api with a whitelist domain', async () => {
         const currentKey = 'SDLKJFLSJDKCWEKRJC';
+        const domainExample = 'www.google.com';
 
         await DB.apikeys.create({
             key: currentKey,
-            whitelist_domains: ['Referer']
+            whitelist_domains: [domainExample]
         });
 
         const req: Request = {
             header(name): any {
                 if (name === 'Authorization') {
-                    return `Bearer ${currentKey}`
+                    return `Bearer ${currentKey}`;
+                }
+                if (name === 'Referer') {
+                    return domainExample;
                 }
             }
         };
 
-        // TODO code is wrong
-        // expect(checkValidApiKey(req)).to.not.be.rejected;
+        expect(checkValidApiKey(req)).to.not.be.rejected;
     });
 
     it('should NOT reject api with whitelist ip/domain as "*"', async () => {
