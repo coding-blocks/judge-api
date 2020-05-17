@@ -26,7 +26,16 @@ export interface RunJob {
   scenario: string
 }
 
-export type JudgeJob = RunJob | SubmissionJob
+export interface ProjectJob {
+  id: number
+  source: string,
+  lang: string,
+  problem: string,
+  timelimit: number,
+  scenario: string
+}
+
+export type JudgeJob = RunJob | SubmissionJob | ProjectJob
 
 let jobQ = 'job_queue'
 let successQ = 'success_queue'
@@ -50,8 +59,17 @@ amqp.connect(`amqp://${config.AMQP.USER}:${config.AMQP.PASS}@${config.AMQP.HOST}
       jobChannel.consume(successQ, (msg) => {
         debug(`SUCCESS:CONSUME: msg.content = ${msg.content.toString()}`)
 
-        const payload = JSON.parse(msg.content.toString())        
-        const eventName = payload.testcases ? 'submit_result' : 'run_result'
+        const payload = JSON.parse(msg.content.toString())
+        let eventName;
+        if (payload.testcases) {
+          eventName = 'submit_result'
+        }
+        else if (payload.code && payload.score) {
+          eventName = 'project_result'
+        }
+        else {
+          eventName = 'run_result'
+        }
 
         successListener.emit(eventName, payload)
         jobChannel.ack(msg)
