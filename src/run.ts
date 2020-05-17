@@ -1,8 +1,8 @@
 import app from './server'
-import config = require('../config')
 import * as debug from 'debug'
 import DB from 'models'
 
+const config = require('../config/index')
 const log = debug('judge:api')
 
 DB.sequelize.sync({})
