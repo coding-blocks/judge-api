@@ -2,7 +2,7 @@ import { Handler } from 'express'
 import BaseValidator from 'validators/baseValidator'
 import * as Joi from '@hapi/joi'
 
-export default class RunValidator extends BaseValidator {
+export default class SubmitValidator extends BaseValidator {
   POST: Handler
 
   constructor() {
