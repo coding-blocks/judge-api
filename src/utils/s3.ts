@@ -2,7 +2,7 @@ import Minio = require('minio')
 import v4 =  require('uuid/v4')
 import axios from 'axios'
 
-const config = require('../../config/index')
+const config = require('../../config')
 const client = new Minio.Client({
   endPoint: config.S3.endpoint,
   port: +config.S3.port,

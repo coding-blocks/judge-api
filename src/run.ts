@@ -2,7 +2,7 @@ import app from './server'
 import * as debug from 'debug'
 import DB from 'models'
 
-const config = require('../config/index')
+const config = require('../config')
 const log = debug('judge:api')
 
 DB.sequelize.sync({})

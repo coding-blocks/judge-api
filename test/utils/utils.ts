@@ -1,6 +1,6 @@
 import * as amqp from 'amqplib/callback_api';
 import DB from "../../src/models";
-const config = require('../../config/index');
+const config = require('../../config');
 
 const jobQ = 'job_queue'
 const successQ = 'success_queue'
