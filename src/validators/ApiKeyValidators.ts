@@ -19,7 +19,7 @@ export function checkValidApiKey (req: Request): Promise<boolean> {
         if (apiKey.whitelist_domains[0] === '*') {
           return resolve()
         }
-        if (apiKey.whitelist_domains.indexOf('Referer')) {
+        if (apiKey.whitelist_domains.indexOf(req.header('Referer')) !== -1) {
           return resolve()
         }
 
