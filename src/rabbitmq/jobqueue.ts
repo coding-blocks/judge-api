@@ -32,7 +32,8 @@ export interface ProjectJob {
   lang: string,
   problem: string,
   timelimit: number,
-  scenario: string
+  scenario: string,
+  submissionDirs: string
 }
 
 export type JudgeJob = RunJob | SubmissionJob | ProjectJob

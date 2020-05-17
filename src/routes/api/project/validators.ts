@@ -20,7 +20,8 @@ export default class ProjectValidator extends BaseValidator {
             .uri()
             .required(),
         submissionDirs: Joi
-            .array(),
+            .string()
+            .required(),
         mode: Joi
             .string()
             .valid('sync', 'callback', 'poll'),
