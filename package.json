@@ -23,7 +23,7 @@
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.22.6",
     "sinon": "^9.0.2",
-    "uuid": "^7.0.1"
+    "uuid": "^8.1.0"
   },
   "devDependencies": {
     "@types/chai": "^4.0.4",
