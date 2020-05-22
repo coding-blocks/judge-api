@@ -35,11 +35,6 @@ const testcases = [
 ];
 const expectedResult = 'Success';
 
-
-function delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
-}
-
 describe('POST api/submissions', () => {
     before(async () => {
         await DB.apikeys.create({
@@ -171,7 +166,7 @@ describe('POST api/submissions', () => {
 
 
         // there is a delay of 1000 for onSuccess, so setting 2000ms delay here.
-        await delay(2000);
+        await utils.delay(2000);
         const resultResponse = await chai.request(app).get(`/api/result/${res.body.id}`).set({
             Authorization: 'Bearer 7718330d2794406c980bdbded6c9dc1d',
             Accept: 'application/json'
@@ -210,7 +205,7 @@ describe('POST api/submissions', () => {
             app2.use('/', router);
         });
 
-        await delay(2000);
+        await utils.delay(2000);
 
         expect(res.body.id).to.exist;
         expect(res.status).to.equal(200);
