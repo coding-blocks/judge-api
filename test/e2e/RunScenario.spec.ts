@@ -23,11 +23,6 @@ const source = `
 const stdin = 'Success';
 const expectedOutput = 'Success';
 
-
-function delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
-}
-
 describe('POST api/runs', () => {
     before(async () => {
         await DB.apikeys.create({
@@ -171,12 +166,15 @@ describe('POST api/runs', () => {
         expect(res.status).to.equal(200);
 
         // there is a delay of 1000 for onSuccess, so setting 2000ms delay here.
-        await delay(2000);
-        const submission = await DB.submissions.findById(res.body.id);
+        await utils.delay(2000);
+        const resultResponse = await chai.request(app).get(`/api/result/${res.body.id}`).set({
+            Authorization: 'Bearer 7718330d2794406c980bdbded6c9dc1d',
+            Accept: 'application/json'
+        }).send(params);
 
         expect(res.body.id).to.exist;
         expect(res.status).to.equal(200);
-        expect(submission.results.stdout).to.equal(expectedOutput);
+        expect(resultResponse.body.stdout).to.equal(expectedOutput);
     });
 
     it('should return id and send result to callback url in callback mode', async () => {
@@ -206,7 +204,7 @@ describe('POST api/runs', () => {
             app2.use('/', router);
         });
 
-        await delay(2000);
+        await utils.delay(2000);
 
         expect(res.body.id).to.exist;
         expect(res.status).to.equal(200);

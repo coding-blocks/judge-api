@@ -60,3 +60,7 @@ export async function truncateTables() {
     await DB.langs.destroy({truncate: true});
     await DB.submissions.destroy({truncate: true});
 }
+
+export function delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+}
