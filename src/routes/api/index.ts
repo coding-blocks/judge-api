@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response, Router } from 'express'
 import run from './run'
 import submit from './submit'
+import project from './project'
 import result from './result'
 import { route as langs } from './langs'
 import { checkValidApiKey } from '../../validators/ApiKeyValidators'
@@ -29,6 +30,7 @@ route.use((req: Request, res: Response, next: NextFunction) => {
 route.use('/runs', run)
 route.use('/result', result)
 route.use('/submissions', submit)
+route.use('/project', project)
 route.use('/langs', langs)
 
 export default route

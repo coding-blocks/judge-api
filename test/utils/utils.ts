@@ -27,6 +27,17 @@ export async function setupMockQueue(){
                             testcases: []
                         }
                     }
+                    else if(job.submissionDirs) {
+                        // project_result
+                        payload = {
+                            id: job.id,
+                            stdout: 'stdout',
+                            stderr: 'stderr',
+                            time: 1,
+                            code: 100,
+                            score: 100
+                        }
+                    }
                     else {
                         // run_result
                         payload = {

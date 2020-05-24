@@ -11,6 +11,9 @@ export default class ProjectValidator extends BaseValidator {
     }
 
     POSTSchema = Joi.object({
+        lang: Joi
+            .string()
+            .required(),
         problem: Joi
             .string()
             .uri()
