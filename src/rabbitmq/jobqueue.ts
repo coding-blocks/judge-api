@@ -65,7 +65,7 @@ amqp.connect(`amqp://${config.AMQP.USER}:${config.AMQP.PASS}@${config.AMQP.HOST}
         if (payload.testcases) {
           eventName = 'submit_result'
         }
-        else if (payload.code && payload.score) {
+        else if (payload.hasOwnProperty('code') && payload.hasOwnProperty('score')) {
           eventName = 'project_result'
         }
         else {
