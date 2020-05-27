@@ -7,7 +7,7 @@ import langValidator from '../../../middlewares/langValidator';
 const router: Router = Router()
 const validator = new Validator()
 
-router.post('/', validator.POST, langValidator(), Controller.runPOST)
+router.post('/', validator.POST, Controller.runPOST)
 successListener.on('project_result', Controller.onSuccess)
 
 export default router
