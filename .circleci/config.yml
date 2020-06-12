@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Build Docker Image
           command: |
-            docker-compose build
+            docker-compose --file docker-compose-test.yml build
       - run:
           name: Run Test Docker Compose
           command: |
