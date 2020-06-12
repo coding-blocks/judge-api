@@ -62,16 +62,17 @@ amqp.connect(`amqp://${config.AMQP.USER}:${config.AMQP.PASS}@${config.AMQP.HOST}
 
         const payload = JSON.parse(msg.content.toString())
         let eventName;
-        if (payload.testcases) {
-          eventName = 'submit_result'
+        switch(payload.scenario) {
+          case 'run':
+            eventName = 'run_result'
+            break
+          case 'submit':
+            eventName = 'submit_result'
+            break
+          case 'project':
+            eventName = 'project_result'
+            break
         }
-        else if (payload.hasOwnProperty('code') && payload.hasOwnProperty('score')) {
-          eventName = 'project_result'
-        }
-        else {
-          eventName = 'run_result'
-        }
-
         successListener.emit(eventName, payload)
         jobChannel.ack(msg)
       })
