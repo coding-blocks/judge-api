@@ -6,7 +6,7 @@ module.exports = {
     max_memory_restart: '1G',
     env: {
       NODE_ENV: 'development',
-      ...require('secrets.json')
+      ...require('./secrets.json')
     },
     env_production: {
       NODE_ENV: 'production'
