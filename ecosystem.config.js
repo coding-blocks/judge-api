@@ -1,6 +1,6 @@
 module.exports = {
   apps : [{
-    name: 'Judge2 API',
+    name: 'judge2-api',
     script: 'dist/run.js',
     autorestart: true,
     interpreter: '/home/codingblocks/.nvm/versions/node/v10.21.0/bin/node',
