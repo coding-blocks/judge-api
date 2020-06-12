@@ -19,9 +19,12 @@ services:
   api:
     build: .
     image: codingblocks/judge-api
+    volumes: 
+      - ./coverage:/usr/src/judge-api/coverage
     depends_on:
       - postgres
     ports:
     - "3737:3737"
     env_file:
       - test.env
+    command: ./scripts/wait-for-it.sh -t 180 postgres:5432 -- ./scripts/wait-for-it.sh -t 180 rabbitmq:5672 -- npm run cover      

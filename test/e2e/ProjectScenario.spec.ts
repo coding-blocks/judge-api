@@ -3,7 +3,7 @@ import DB from '../../src/models';
 import express = require('express');
 import { Router } from 'express';
 import * as utils from '../utils/utils';
-
+import ProjectController from '../../src/routes/api/project/controller';
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
@@ -60,24 +60,6 @@ describe('POST api/project', () => {
 
         expect(res.status).to.equal(400);
         expect(res.body.err.message).to.equal('"lang" is required');
-    });
-
-    it('should throw 400 error for incorrect language', async () => {
-        const params = {
-            lang: 'abcd',
-            problem: 'https://minio.cb.lk/public/input',
-            submission: 'https://minio.cb.lk/public/input',
-            submissionDirs: 'src',
-            mode: 'sync',
-            timelimit: 1
-        };
-
-        const res = await chai.request(app).post(`/api/project`).set({
-            Authorization: 'Bearer 7718330d2794406c980bdbded6c9dc1d',
-            Accept: 'application/json'
-        }).send(params);
-
-        expect(res.status).to.equal(400);
     });
 
     it('should throw 400 error for problem missing', async () => {

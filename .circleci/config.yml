@@ -21,24 +21,10 @@ jobs:
           command: |
             docker-compose build
       - run:
-          name: Docker Compose
+          name: Run Test Docker Compose
           command: |
-            docker-compose -p judgecompose up -d
+            docker-compose --file docker-compose-test.yml up --abort-on-container-exit
       - run:
-          name: Seed Language Data
-          command: |
-            docker exec judgecompose_api_1 scripts/wait-for-it.sh -t 180 api:3737 -- npm run seedlangs
-      - run:
-          name: Run Tests
-          command: |
-            mkdir -p coverage
-            docker kill judgecompose_api_1
-            docker run -t --env-file test.env \
-              -v "$PWD/coverage:/usr/src/judge-api/coverage" \
-              --network judgecompose_default \
-              --env "DEBUG=test:* JUDGEAPI_HOST=api JUDGEAPI_PORT=2222" codingblocks/judge-api \
-              npm run cover
-      - run:
-          name: Submit Coverage
+          name: Submit Code Coverage
           command: bash <(curl -s https://codecov.io/bash)
 
