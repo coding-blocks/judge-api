@@ -31,7 +31,7 @@ describe('SubmitValidator', async () => {
             body: {
                 problem: 'https://minio.cb.lk/public/input',
                 submission: 'https://minio.cb.lk/public/input',
-                submissionDirs: 'src',
+                lockedFiles: ['package.json', 'yarn.lock', 'test'],
                 mode: 'poll',
                 timelimit: 1
             }
@@ -49,7 +49,7 @@ describe('SubmitValidator', async () => {
             body: {
                 lang: 'node',
                 submission: 'https://minio.cb.lk/public/input',
-                submissionDirs: 'src',
+                lockedFiles: ['package.json', 'yarn.lock', 'test'],
                 mode: 'poll',
                 timelimit: 1
             }
@@ -68,7 +68,7 @@ describe('SubmitValidator', async () => {
                 lang: 'node',
                 problem: 'not-a-url',
                 submission: 'https://minio.cb.lk/public/input',
-                submissionDirs: 'src',
+                lockedFiles: ['package.json', 'yarn.lock', 'test'],
                 mode: 'poll',
                 timelimit: 1
             }
@@ -87,7 +87,7 @@ describe('SubmitValidator', async () => {
                 lang: 'node',
                 problem: 123,
                 submission: 'https://minio.cb.lk/public/input',
-                submissionDirs: 'src',
+                lockedFiles: ['package.json', 'yarn.lock', 'test'],
                 mode: 'poll',
                 timelimit: 1
             }
@@ -105,7 +105,7 @@ describe('SubmitValidator', async () => {
             body: {
                 lang: 'node',
                 problem: 'https://minio.cb.lk/public/input',
-                submissionDirs: 'src',
+                lockedFiles: ['package.json', 'yarn.lock', 'test'],
                 mode: 'poll',
                 timelimit: 1
             }
@@ -124,7 +124,7 @@ describe('SubmitValidator', async () => {
                 lang: 'node',
                 problem: 'https://minio.cb.lk/public/input',
                 submission: 'not-a-url',
-                submissionDirs: 'src',
+                lockedFiles: ['package.json', 'yarn.lock', 'test'],
                 mode: 'poll',
                 timelimit: 1
             }
@@ -143,7 +143,7 @@ describe('SubmitValidator', async () => {
                 lang: 'node',
                 problem: 'https://minio.cb.lk/public/input',
                 submission: 123,
-                submissionDirs: 'src',
+                lockedFiles: ['package.json', 'yarn.lock', 'test'],
                 mode: 'poll',
                 timelimit: 1
             }
@@ -162,7 +162,7 @@ describe('SubmitValidator', async () => {
                 lang: 'node',
                 problem: 'https://minio.cb.lk/public/input',
                 submission: 'https://minio.cb.lk/public/input',
-                submissionDirs: 'src',
+                lockedFiles: ['package.json', 'yarn.lock', 'test'],
                 timelimit: 1
             }
         };
@@ -178,7 +178,7 @@ describe('SubmitValidator', async () => {
                 lang: 'node',
                 problem: 'https://minio.cb.lk/public/input',
                 submission: 'https://minio.cb.lk/public/input',
-                submissionDirs: 'src',
+                lockedFiles: ['package.json', 'yarn.lock', 'test'],
                 mode: 123,
                 timelimit: 1
             }
@@ -195,7 +195,7 @@ describe('SubmitValidator', async () => {
                 lang: 'node',
                 problem: 'https://minio.cb.lk/public/input',
                 submission: 'https://minio.cb.lk/public/input',
-                submissionDirs: 'src',
+                lockedFiles: ['package.json', 'yarn.lock', 'test'],
                 mode: 'wrongMode',
                 timelimit: 1
             }
@@ -214,7 +214,7 @@ describe('SubmitValidator', async () => {
                 lang: 'node',
                 problem: 'https://minio.cb.lk/public/input',
                 submission: 'https://minio.cb.lk/public/input',
-                submissionDirs: 'src',
+                lockedFiles: ['package.json', 'yarn.lock', 'test'],
                 mode: 'callback',
                 timelimit: 1
             }
@@ -233,7 +233,7 @@ describe('SubmitValidator', async () => {
                 lang: 'node',
                 problem: 'https://minio.cb.lk/public/input',
                 submission: 'https://minio.cb.lk/public/input',
-                submissionDirs: 'src',
+                lockedFiles: ['package.json', 'yarn.lock', 'test'],
                 mode: 'poll',
                 timelimit: 'abc'
             }
@@ -252,7 +252,7 @@ describe('SubmitValidator', async () => {
                 lang: 'node',
                 problem: 'https://minio.cb.lk/public/input',
                 submission: 'https://minio.cb.lk/public/input',
-                submissionDirs: 'src',
+                lockedFiles: ['package.json', 'yarn.lock', 'test'],
                 mode: 'poll',
                 timelimit: 1
             }
