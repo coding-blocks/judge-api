@@ -29,9 +29,18 @@ describe('SubmitValidator', async () => {
     it('should throw an error with language missing', async () => {
         const req = {
             body: {
-                problem: 'https://minio.cb.lk/public/input',
-                submission: 'https://minio.cb.lk/public/input',
-                lockedFiles: ['package.json', 'yarn.lock', 'test'],
+                problem: 'https://minio.cb.lk/public/problem.zip',
+                submission: 'https://minio.cb.lk/public/problem.zip',
+                config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+                `,
                 mode: 'poll',
                 timelimit: 1
             }
@@ -48,8 +57,17 @@ describe('SubmitValidator', async () => {
         const req = {
             body: {
                 lang: 'node',
-                submission: 'https://minio.cb.lk/public/input',
-                lockedFiles: ['package.json', 'yarn.lock', 'test'],
+                submission: 'https://minio.cb.lk/public/problem.zip',
+                config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+                `,
                 mode: 'poll',
                 timelimit: 1
             }
@@ -67,8 +85,17 @@ describe('SubmitValidator', async () => {
             body: {
                 lang: 'node',
                 problem: 'not-a-url',
-                submission: 'https://minio.cb.lk/public/input',
-                lockedFiles: ['package.json', 'yarn.lock', 'test'],
+                submission: 'https://minio.cb.lk/public/problem.zip',
+                config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+                `,
                 mode: 'poll',
                 timelimit: 1
             }
@@ -86,8 +113,17 @@ describe('SubmitValidator', async () => {
             body: {
                 lang: 'node',
                 problem: 123,
-                submission: 'https://minio.cb.lk/public/input',
-                lockedFiles: ['package.json', 'yarn.lock', 'test'],
+                submission: 'https://minio.cb.lk/public/problem.zip',
+                config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+                `,
                 mode: 'poll',
                 timelimit: 1
             }
@@ -104,8 +140,17 @@ describe('SubmitValidator', async () => {
         const req = {
             body: {
                 lang: 'node',
-                problem: 'https://minio.cb.lk/public/input',
-                lockedFiles: ['package.json', 'yarn.lock', 'test'],
+                problem: 'https://minio.cb.lk/public/problem.zip',
+                config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+                `,
                 mode: 'poll',
                 timelimit: 1
             }
@@ -122,9 +167,18 @@ describe('SubmitValidator', async () => {
         const req = {
             body: {
                 lang: 'node',
-                problem: 'https://minio.cb.lk/public/input',
+                problem: 'https://minio.cb.lk/public/problem.zip',
                 submission: 'not-a-url',
-                lockedFiles: ['package.json', 'yarn.lock', 'test'],
+                config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+                `,
                 mode: 'poll',
                 timelimit: 1
             }
@@ -141,9 +195,18 @@ describe('SubmitValidator', async () => {
         const req = {
             body: {
                 lang: 'node',
-                problem: 'https://minio.cb.lk/public/input',
+                problem: 'https://minio.cb.lk/public/problem.zip',
                 submission: 123,
-                lockedFiles: ['package.json', 'yarn.lock', 'test'],
+                config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+                `,
                 mode: 'poll',
                 timelimit: 1
             }
@@ -160,9 +223,18 @@ describe('SubmitValidator', async () => {
         const req = {
             body: {
                 lang: 'node',
-                problem: 'https://minio.cb.lk/public/input',
-                submission: 'https://minio.cb.lk/public/input',
-                lockedFiles: ['package.json', 'yarn.lock', 'test'],
+                problem: 'https://minio.cb.lk/public/problem.zip',
+                submission: 'https://minio.cb.lk/public/problem.zip',
+                config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+                `,
                 timelimit: 1
             }
         };
@@ -176,9 +248,18 @@ describe('SubmitValidator', async () => {
         const req = {
             body: {
                 lang: 'node',
-                problem: 'https://minio.cb.lk/public/input',
-                submission: 'https://minio.cb.lk/public/input',
-                lockedFiles: ['package.json', 'yarn.lock', 'test'],
+                problem: 'https://minio.cb.lk/public/problem.zip',
+                submission: 'https://minio.cb.lk/public/problem.zip',
+                config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+                `,
                 mode: 123,
                 timelimit: 1
             }
@@ -193,9 +274,18 @@ describe('SubmitValidator', async () => {
         const req = {
             body: {
                 lang: 'node',
-                problem: 'https://minio.cb.lk/public/input',
-                submission: 'https://minio.cb.lk/public/input',
-                lockedFiles: ['package.json', 'yarn.lock', 'test'],
+                problem: 'https://minio.cb.lk/public/problem.zip',
+                submission: 'https://minio.cb.lk/public/problem.zip',
+                config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+                `,
                 mode: 'wrongMode',
                 timelimit: 1
             }
@@ -212,9 +302,18 @@ describe('SubmitValidator', async () => {
         const req = {
             body: {
                 lang: 'node',
-                problem: 'https://minio.cb.lk/public/input',
-                submission: 'https://minio.cb.lk/public/input',
-                lockedFiles: ['package.json', 'yarn.lock', 'test'],
+                problem: 'https://minio.cb.lk/public/problem.zip',
+                submission: 'https://minio.cb.lk/public/problem.zip',
+                config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+                `,
                 mode: 'callback',
                 timelimit: 1
             }
@@ -231,9 +330,18 @@ describe('SubmitValidator', async () => {
         const req = {
             body: {
                 lang: 'node',
-                problem: 'https://minio.cb.lk/public/input',
-                submission: 'https://minio.cb.lk/public/input',
-                lockedFiles: ['package.json', 'yarn.lock', 'test'],
+                problem: 'https://minio.cb.lk/public/problem.zip',
+                submission: 'https://minio.cb.lk/public/problem.zip',
+                config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+                `,
                 mode: 'poll',
                 timelimit: 'abc'
             }
@@ -250,9 +358,18 @@ describe('SubmitValidator', async () => {
         const req = {
             body: {
                 lang: 'node',
-                problem: 'https://minio.cb.lk/public/input',
-                submission: 'https://minio.cb.lk/public/input',
-                lockedFiles: ['package.json', 'yarn.lock', 'test'],
+                problem: 'https://minio.cb.lk/public/problem.zip',
+                submission: 'https://minio.cb.lk/public/problem.zip',
+                config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+                `,
                 mode: 'poll',
                 timelimit: 1
             }

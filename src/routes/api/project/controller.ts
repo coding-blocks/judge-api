@@ -32,7 +32,7 @@ export default {
             source: req.body.submission,
             problem: req.body.problem,
             lang: req.body.lang,
-            lockedFiles: req.body.lockedFiles,
+            config: req.body.config,
             timelimit: req.body.timelimit,
             scenario: 'project'
         })

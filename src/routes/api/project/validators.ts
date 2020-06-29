@@ -22,10 +22,8 @@ export default class ProjectValidator extends BaseValidator {
             .string()
             .uri()
             .required(),
-        lockedFiles: Joi
-            .array()
-            .items(Joi.string())
-            .min(1)
+        config: Joi
+            .string()
             .required(),
         mode: Joi
             .string()

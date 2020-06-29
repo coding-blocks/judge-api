@@ -33,7 +33,7 @@ export interface ProjectJob {
   problem: string,
   timelimit: number,
   scenario: string,
-  lockedFiles: string
+  config: string
 }
 
 export type JudgeJob = RunJob | SubmissionJob | ProjectJob

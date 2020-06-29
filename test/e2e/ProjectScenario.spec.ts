@@ -66,7 +66,16 @@ describe('POST api/project', () => {
         const params = {
             lang: 'node',
             submission: 'https://minio.cb.lk/public/input',
-            lockedFiles: ['package.json', 'yarn.lock', 'test'],
+            config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+            `,
             mode: 'sync',
             timelimit: 1
         };
@@ -85,7 +94,16 @@ describe('POST api/project', () => {
             lang: 'node',
             problem: 'not-a-url',
             submission: 'https://minio.cb.lk/public/input',
-            lockedFiles: ['package.json', 'yarn.lock', 'test'],
+            config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+            `,
             mode: 'sync',
             timelimit: 1
         };
@@ -103,7 +121,16 @@ describe('POST api/project', () => {
         const params = {
             lang: 'node',
             problem: 'https://minio.cb.lk/public/input',
-            lockedFiles: ['package.json', 'yarn.lock', 'test'],
+            config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+            `,
             mode: 'sync',
             timelimit: 1
         };
@@ -122,7 +149,16 @@ describe('POST api/project', () => {
             lang: 'node',
             problem: 'https://minio.cb.lk/public/input',
             submission: 'not-a-url',
-            lockedFiles: ['package.json', 'yarn.lock', 'test'],
+            config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+            `,
             mode: 'sync',
             timelimit: 1
         };
@@ -136,7 +172,7 @@ describe('POST api/project', () => {
         expect(res.body.err.message).to.equal('"submission" must be a valid uri');
     });
 
-    it('should throw 400 error for lockedFiles missing', async () => {
+    it('should throw 400 error for config missing', async () => {
         const params = {
             lang: 'node',
             problem: 'https://minio.cb.lk/public/input',
@@ -151,15 +187,15 @@ describe('POST api/project', () => {
         }).send(params);
 
         expect(res.status).to.equal(400);
-        expect(res.body.err.message).to.equal('"lockedFiles" is required');
+        expect(res.body.err.message).to.equal('"config" is required');
     });
 
-    it('should throw 400 error when lockedFiles is not a string', async () => {
+    it('should throw 400 error when config is not a string', async () => {
         const params = {
             lang: 'node',
             problem: 'https://minio.cb.lk/public/input',
             submission: 'https://minio.cb.lk/public/input',
-            lockedFiles: 123,
+            config: 123,
             mode: 'sync',
             timelimit: 1
         };
@@ -170,7 +206,7 @@ describe('POST api/project', () => {
         }).send(params);
 
         expect(res.status).to.equal(400);
-        expect(res.body.err.message).to.equal('"lockedFiles" must be an array');
+        expect(res.body.err.message).to.equal('"config" must be an array');
     });
 
     it('should throw 400 error for incorrect mode ', async () => {
@@ -178,7 +214,16 @@ describe('POST api/project', () => {
             lang: 'node',
             problem: 'https://minio.cb.lk/public/input',
             submission: 'https://minio.cb.lk/public/input',
-            lockedFiles: ['package.json', 'yarn.lock', 'test'],
+            config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+            `,
             mode: 'abc',
             timelimit: 1
         };
@@ -197,7 +242,16 @@ describe('POST api/project', () => {
             lang: 'node',
             problem: 'https://minio.cb.lk/public/input',
             submission: 'https://minio.cb.lk/public/input',
-            lockedFiles: ['package.json', 'yarn.lock', 'test'],
+            config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+            `,
             mode: 'callback',
             timelimit: 1
         };
@@ -216,7 +270,16 @@ describe('POST api/project', () => {
             lang: 'node',
             problem: 'https://minio.cb.lk/public/input',
             submission: 'https://minio.cb.lk/public/input',
-            lockedFiles: ['package.json', 'yarn.lock', 'test'],
+            config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+            `,
             mode: 'sync',
             timelimit: 1
         };
@@ -236,7 +299,16 @@ describe('POST api/project', () => {
             lang: 'node',
             problem: 'https://minio.cb.lk/public/input',
             submission: 'https://minio.cb.lk/public/input',
-            lockedFiles: ['package.json', 'yarn.lock', 'test'],
+            config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+            `,
             mode: 'poll',
             timelimit: 1
         };
@@ -261,7 +333,16 @@ describe('POST api/project', () => {
             lang: 'node',
             problem: 'https://minio.cb.lk/public/input',
             submission: 'https://minio.cb.lk/public/input',
-            lockedFiles: ['package.json', 'yarn.lock', 'test'],
+            config: `
+project:
+  allowed-folders:
+    - src/**/*.js
+  before-test:
+    - yarn install
+    - yarn build
+  testcases:
+    - yarn test
+            `,
             mode: 'callback',
             callback: 'http://localhost:2404',
             timelimit: 1
