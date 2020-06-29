@@ -206,7 +206,7 @@ project:
         }).send(params);
 
         expect(res.status).to.equal(400);
-        expect(res.body.err.message).to.equal('"config" must be an array');
+        expect(res.body.err.message).to.equal('"config" must be a string');
     });
 
     it('should throw 400 error for incorrect mode ', async () => {
