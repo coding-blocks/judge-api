@@ -82,10 +82,11 @@ amqp.connect(`amqp://${config.AMQP.USER}:${config.AMQP.PASS}@${config.AMQP.HOST}
 /**
  * Put a new job on the queue
  * @param {JudgeJob} job
+ * @param {string} queueName
  * @returns {boolean} true if job was put on queue successfully
  */
-function queueJob(job: JudgeJob) {
-  return jobChannel.sendToQueue(jobQ, Buffer.from(JSON.stringify(job)), { persistent: true })
+function queueJob(job: JudgeJob, queueName: string = null) {
+  return jobChannel.sendToQueue(queueName || jobQ, Buffer.from(JSON.stringify(job)), { persistent: true })
 }
 export {
   queueJob,

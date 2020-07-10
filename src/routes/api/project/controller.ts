@@ -35,7 +35,7 @@ export default {
             config: req.body.config,
             timelimit: req.body.timelimit,
             scenario: 'project'
-        })
+        }, 'project_queue')
 
 
         if (['callback', 'poll'].includes(mode)) {
