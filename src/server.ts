@@ -2,10 +2,11 @@ import express = require('express')
 import dbg = require('debug')
 import path = require ('path')
 import apiRoute from './routes/api'
-
+const { ExpressLogger } = require('./services/logger')
 const debug = dbg('server:main')
 
 const app = express()
+app.use(ExpressLogger)
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use('/docs', express.static(path.join(__dirname, '../docs')))
