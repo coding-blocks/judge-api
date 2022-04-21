@@ -47,7 +47,7 @@
     "build": "tsc",
     "apidoc": "apidoc -i src -o docs",
     "prestart": "npm run build",
-    "start": "cross-env NODE_PATH=dist node dist/run.js",
+    "start": "cross-env NODE_PATH=dist ./wait-for-it.sh ${AMQP_HOST}:${AMQP_PORT} -- node dist/run.js",
     "test": "cross-env NODE_PATH=src NODE_ENV=test mocha --timeout 12000 --exit --require ts-node/register test/utils/setup*.ts test/unit/validators/*.ts test/e2e/*.ts",
     "cover": "nyc npm test",
     "seedlangs": "node dist/scripts/seed-defaultlangs.js",
