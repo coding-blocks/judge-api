@@ -33,7 +33,8 @@ export default class SubmitValidator extends BaseValidator {
         Joi.object({
           id: Joi.number().required(),
           input: Joi.string().uri().required(),
-          output: Joi.string().uri().required()
+          output: Joi.string().uri().required(),
+          timelimit: Joi.object()
         })
       )
       .required()
