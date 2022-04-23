@@ -11,6 +11,8 @@ module.exports = {
       ...require('./secrets.json')
     },
     env_production: {
+      ...require('./secrets.json'),
+      NODE_PATH: 'dist',
       NODE_ENV: 'production'
     }
   }]
