@@ -25,6 +25,7 @@ const RunPool: { [x: number]: RunPoolElement } = {}
 export default {
   async submitPOST(req: Request, res: Response) {
     const mode = req.body.mode || 'sync'
+    const enable_custom_testcase_checker = req.body.enable_custom_testcase_checker
     const job = await DB.submissions.create({
       lang: req.body.lang,
       start_time: new Date(),
@@ -38,6 +39,8 @@ export default {
       lang: req.body.lang,
       timelimit: req.body.timelimit,
       testcases: req.body.testcases,
+      enable_custom_testcase_checker: enable_custom_testcase_checker === 'false' ? false : !!enable_custom_testcase_checker,
+      custom_testcase_checker_code: req.body.custom_testcase_checker_code,
       scenario: 'submit'
     })
 

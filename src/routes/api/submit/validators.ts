@@ -38,6 +38,8 @@ export default class SubmitValidator extends BaseValidator {
           memorylimit: Joi.object()
         })
       )
-      .required()
+      .required(),
+    enable_custom_testcase_checker: Joi.boolean().required(),
+    custom_testcase_checker_code: Joi.string().allow(null, '')
   })
 }
