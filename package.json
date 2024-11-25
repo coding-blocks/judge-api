@@ -20,7 +20,7 @@
     "express": "^4.16.2",
     "express-winston": "^4.1.0",
     "minio": "^7.0.3",
-    "pg": "^7.4.3",
+    "pg": "^8.0.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.22.6",
     "sinon": "^9.0.2",
