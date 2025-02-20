@@ -11,7 +11,8 @@ DB.sequelize.sync()
       { lang_slug: 'nodejs8', lang_name: 'NodeJS 8', lang_version: '8' },
       { lang_slug: 'nodejs10', lang_name: 'NodeJS 10', lang_version: '10' },
       { lang_slug: 'cpp', lang_name: 'C++', lang_version: '11' },
-      { lang_slug: 'c', lang_name: 'C', lang_version: '6' }
+      { lang_slug: 'c', lang_name: 'C', lang_version: '6' },
+      { lang_slug: 'mysql', lang_name: 'MySQL', lang_version: '10.4' }
     ]))
   .then(async () => { console.log('Languages Seeded') })
   .then(() => DB.apikeys.sync({ force: true }))
